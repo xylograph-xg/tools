@@ -11,4 +11,4 @@
 | [tool_registry](tool_registry/README.md) | 登记使用方，检查源码指纹和双向链接，生成接口快照。 |
 | [public_export](public_export/README.md) | 从五个项目的已提交源码导出公开发布目录。 |
 
-前三个工具从相邻的 paper 项目调用权威源码。跨项目依赖可查[工具登记表](registry.json)和[使用项目索引](projects.json)。
+前四个工具的权威源码位于各自工具目录。跨项目依赖可查[工具登记表](registry.json)和[使用项目索引](projects.json)。

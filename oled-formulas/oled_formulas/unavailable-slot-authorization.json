@@ -1,0 +1,65 @@
+{
+  "formula-display-8053": {
+    "target": "F28E2F995A64371484240DAAF5C21E31",
+    "url": "https://chatgpt.com/c/6b086820-5c10-83ed-8c51-c06dcc993662?temporary-chat=true",
+    "zip_sha256": "ddb3559ddee61999a50f78767d570fcdedd4a00fef6a804a2fffef5e6aef7bf7",
+    "sent_at": 1795713055.915236,
+    "receipt_sha256": "49ff42c37a06caf3ff80c1c72cdb727de6d4eda99ba24c9a4dd6df82e1ff1786",
+    "archive_sha256": "b14ccc2d8068d363c175e773bd48037df0ab1539d0b1a7a857ef24adb0f275ec",
+    "get_sha256": "56452302c8f5121347991a833f5680e1c4c7ab7bb611b6c893081bb65f84a47d"
+  },
+  "formula-display-7396": {
+    "target": "031D32A258819D1DE3C32E2C1692D669",
+    "url": "https://chatgpt.com/c/6b08667d-81f4-83eb-a276-d76c8c97bf25?temporary-chat=true",
+    "zip_sha256": "3126012509228aa2649342064533c2c76e4fa84559b8b962e604cb6d1b58f34e",
+    "sent_at": 1795712632.8419971,
+    "receipt_sha256": "261e3ee797440db37adf4b08e7795055844078e003e98d3b042acc34fdffb180",
+    "archive_sha256": "30cea6a43bab5a57fd1dec801ee91d77eb70e48c4384dd5a45090faf001be9aa",
+    "get_sha256": "1c7536c2b64c2aa619f5ce9b37c3091e50115b68fa4832e89175a092249e725c"
+  },
+  "formula-display-7881": {
+    "target": "3CC0916C27557FA5A67A209DCD3A5861",
+    "url": "https://chatgpt.com/c/6b0867ee-3d74-83eb-8cc3-71b28656f979?temporary-chat=true",
+    "zip_sha256": "7871a714e9f71da4d81d12c454166710a39883b7be3d7b27dfb87a3e27af1afc",
+    "sent_at": 1795713005.85946,
+    "receipt_sha256": "93d545bb4d4cd16760e130511c5d7ab04153ce0e99511487873f86d3ddaebfce",
+    "archive_sha256": "9d00e8af3cbe6da3106a9e3b2549b4cd8e01fadd884db0efc2ac601452275402",
+    "get_sha256": "e75bb821b9e25de3928731c93671f9f567c3ba0e4d8cb929624c54d266990049"
+  },
+  "formula-display-7939": {
+    "target": "C816BDCB13591DCA8682A42181CA5822",
+    "url": "https://chatgpt.com/c/6b08681c-2104-83ed-844b-0f1bddf16601?temporary-chat=true",
+    "zip_sha256": "97c667932c00d9d7f7ad3ecb7f2d2ee8743988436a6cdc8a6fbe14de57c179b1",
+    "sent_at": 1795713051.8352928,
+    "receipt_sha256": "b506a5e236a39f65966c2a0f7b8dc4b4b1b0467b1a3df4b25480b19c8c8e345d",
+    "archive_sha256": "8a1bad84f20acae8bbf69d7d8b750c1e9eebf8da9c32852c5d6a9696db785dfd",
+    "get_sha256": "2bd486a4b66e8255f93fea3ec34c903df646c2535b88a181134e3b833b4ee804"
+  },
+  "formula-display-118": {
+    "target": "4B73B9E08A9A1124AAF32B0BF75E408D",
+    "url": "https://chatgpt.com/c/6b080373-3b54-83ed-b082-01371ed9d226?temporary-chat=true",
+    "zip_sha256": "df9b6d42a04c56746f23b72c8de056a4b2a31a884c0c359656d30c2e35b77021",
+    "sent_at": 1795687277.721473,
+    "receipt_sha256": "8c07bcd7026b0c6162fd43774d18b55cb4af85dd764d7a09fd53820d11bc7b73",
+    "archive_sha256": "0eda217e9535845ea4163161fb4ce69ce3204f13146d2f48ce4fb5c18ca60b23",
+    "get_sha256": "8e7e2a5e2091078fd421738bb4e0190767322d918664c2ec141e1c169d29dcd7"
+  },
+  "formula-display-12": {
+    "target": "0BD426F5E75C42FAD0666611F301BEBB",
+    "url": "https://chatgpt.com/c/6b06fcc3-ec34-83eb-8ea5-2a0cd28a7f36?temporary-chat=true",
+    "zip_sha256": "b2d630c909e2e18debd63d65534bf3498397950c82cb3137336260632a7f568e",
+    "sent_at": 1795620035.2456691,
+    "receipt_sha256": "9b34a5058409e1717aa55e474e49c77c50015710ddd4342cdb3b140010e7de72",
+    "archive_sha256": "42da4e1561e378f4c693cf775bcda15027be0f29bbccdf7f6fb468768a481aee",
+    "get_sha256": "ddd31f7976f788da7d6961ac734911936ced16508d0c2f7b85a6b1569cfaa800"
+  },
+  "formula-batch-3": {
+    "target": "DDD723E10202B2E4EF10F5CAA9C69F2C",
+    "url": "https://chatgpt.com/c/6b06efb7-e098-83eb-964f-4662669f9967?temporary-chat=true",
+    "zip_sha256": "ec9d804eb292b4f84f870ffe0a114a00d5c7feb419325b73250da51da89de54a",
+    "sent_at": 1795616695.28455,
+    "receipt_sha256": "aca6649c51c16feafe55ff8086d9b11db421394501bb2ba3ad5784ff65c63c24",
+    "archive_sha256": "53e38953a6284b97ed2c629acd1c79f23433e4442591914a5b1f7d9c16b6f931",
+    "get_sha256": "622393acc322bef2d4bb093350c2f667ca073a29eb67e70323a30b88a31da6e9"
+  }
+}

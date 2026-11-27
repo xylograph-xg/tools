@@ -709,3 +709,27 @@ paper/literature directions-rules-1.4.33/0.5.27：跨页重复页眉与正文科
 - 2026-11-27：使用方核对 paper → codex_desktop_chat。核对本轮相对路径文档及既有调用签名。桌面工具 50 项、Web 客户端 19 项离线回归通过。（命令未执行业务验收。）
 
 - 2026-11-27：使用方核对 paper → codex_web_client。核对本轮相对路径文档及既有调用签名。桌面工具 50 项、Web 客户端 19 项离线回归通过。（命令未执行业务验收。）
+
+## 2026-11-27 独立工具源码迁移
+
+文献探索、桌面 Chat、Web 客户端和 OLED 公式的开发源码迁入各自工具目录。paper 通过相对路径接入。OLED 现有发布包仍按原 SHA-256 校验。
+
+- 2026-11-27：源码审查 literature_explorer。核对迁移前后源码、相对路径、CLI 与 paper 依赖入口（命令未执行业务验收。）
+
+- 2026-11-27：源码审查 codex_desktop_chat。核对迁移前后源码、相对路径、CLI 与 paper 依赖入口（命令未执行业务验收。）
+
+- 2026-11-27：源码审查 codex_web_client。核对迁移前后源码、相对路径、CLI 与 paper 依赖入口（命令未执行业务验收。）
+
+- 2026-11-27：使用方核对 paper → codex_desktop_chat。核对 paper 工作区导入及消费者清单的相对路径（命令未执行业务验收。）
+
+- 2026-11-27：使用方核对 paper → codex_web_client。核对 paper 工作区导入及消费者清单的相对路径（命令未执行业务验收。）
+
+- 2026-11-27：源码审查 literature_explorer。核对独立包入口及 crawler 解析接口、沿用旧库路径（命令未执行业务验收。）
+
+- 2026-11-27：源码审查 oled_formulas。迁入公式源码；核对 paper 公式所有者适配层、相对接口路径及安装包构建（命令未执行业务验收。）
+
+- 2026-11-27：使用方核对 paper → oled_formulas。browser/formula_only.py 从公开 API 导入，离线核对入口身份（命令未执行业务验收。）
+
+- 2026-11-27：源码审查 codex_desktop_chat。原审计回执留在 paper 旧目录，不进入工具源码或构建包。（命令未执行业务验收。）
+
+- 2026-11-27：使用方核对 paper → codex_desktop_chat。核对独立源码路径与原审计材料位置（命令未执行业务验收。）

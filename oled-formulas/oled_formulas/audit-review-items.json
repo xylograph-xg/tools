@@ -1,0 +1,25 @@
+{
+  "report": "AUDIT-Gemini-Hydrogen-20261127-0221.md",
+  "items": [
+    {
+      "paper_id": "01565bcc-5ffe-4da4-bdab-597e7187fadc",
+      "source_sha256": "7aa23e3fb893493549e29b9f5e8cca900656b9e2796d30f5439a3e399342b12c",
+      "batch": 7333,
+      "raw_sha256": "a294e2346bd810f6220fb52082ef3884cd957ff0ab36cc38acf90520a8be241c",
+      "pdf_page": 81,
+      "equation_label": "",
+      "latex_sha256": "24dd7016c77a555427f095ed3b2d662273a40c902b5178bc8e7b94b178803070",
+      "reason": "审计观察到该表达式与正文共行，需复核行间排版"
+    },
+    {
+      "paper_id": "200bb518-f059-4105-9b18-f1579cc996a2",
+      "source_sha256": "3ee9b466aff4fe0526baa142d1a92b1c851740fbb98c9a4bcfa0045318b51a88",
+      "batch": 112,
+      "raw_sha256": "b446251cb19bcf6877963b65e42eaabab6c0fa3668421ddb24d4355033039e87",
+      "pdf_page": 2,
+      "equation_label": "(4)",
+      "latex_sha256": "0de3ecc49b413098763261f5a10f1e453a4b155588566f68e39fdf75100ddc8b",
+      "reason": "审计观察到花体与正体字母混同，需复核吸光度符号"
+    }
+  ]
+}

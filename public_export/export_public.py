@@ -19,7 +19,9 @@ OMIT = {
               "fetch/dependencies/fetchpdf", "workbench/vendor/runtime-status.json",
               "oled_formulas/unavailable-slot-authorization.json", "oled_formulas/audit-review-items.json",
               "infrastructure/config/review_samples.json", ".github"),
-    "tools": ("public_export", "oled-formulas", "CHANGELOG.md"),
+    "tools": ("public_export", "oled-formulas/wheels", "oled-formulas/SHA256SUMS",
+              "oled-formulas/oled_formulas/unavailable-slot-authorization.json",
+              "oled-formulas/oled_formulas/audit-review-items.json", "CHANGELOG.md"),
     "plot": ("AUDIT-2026-11-21.md",),
 }
 REPORT_SOURCE = {"__init__.py", "api.py", "release.py", "pyproject.toml", "Makefile"}
@@ -46,6 +48,8 @@ def included(project, name):
 
 
 def public_text(project, name, text):
+    if project == "tools" and name == "oled-formulas/README.md":
+        return "# OLED 公式整理\n\n[开发源码与使用说明](oled_formulas/README.md)\n"
     if name.endswith("/tool-dependencies.json"):
         data = json.loads(text)
         data = {k: v for k, v in data.items() if k in MANIFEST_KEYS}

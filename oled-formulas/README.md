@@ -1,6 +1,6 @@
 # OLED 公式工具安装包
 
-此目录收集当前 paper 工作区的 OLED 公式整理包，以及按 Python 包依赖递归解析出的全部本地发行包。16 个 wheel 的版本在文件名中，文件摘要见 [SHA256SUMS](SHA256SUMS)。开发源码和项目运行目录见 [paper 工作区](../../paper/WORKFLOWS.md)。
+此目录收集当前 paper 工作区的 OLED 公式整理包，以及按 Python 包依赖递归解析出的全部本地发行包。16 个 wheel 的版本在文件名中，文件摘要见 [SHA256SUMS](SHA256SUMS)。开发源码见[源码目录](oled_formulas/README.md)，项目运行目录见 [paper 工作区](../../paper/WORKFLOWS.md)。
 
 | 入口 | 用途 |
 |---|---|

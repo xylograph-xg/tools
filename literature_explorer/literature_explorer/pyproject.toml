@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paper-literature-explorer"
+version = "1.0.0"
+requires-python = ">=3.11"
+
+[tool.setuptools]
+packages = ["literature_explorer", "literature_explorer.connectors", "literature_explorer.discovery", "literature_explorer.models", "literature_explorer.ranking", "literature_explorer.screening", "literature_explorer.storage", "literature_explorer.scripts"]
+package-dir = {"literature_explorer" = "."}

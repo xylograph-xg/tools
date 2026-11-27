@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "project": "codex_desktop_chat",
+  "version": "1.0.0",
+  "python_entry": "codex_desktop_chat.api",
+  "python_exports": {
+    "bundles__prepare_upload_bundle": "codex_desktop_chat.bundles:prepare_upload_bundle",
+    "bundles__verify_bundle": "codex_desktop_chat.bundles:verify_bundle",
+    "ChatGPTDesktop": "codex_desktop_chat:ChatGPTDesktop",
+    "DesktopChatError": "codex_desktop_chat:DesktopChatError",
+    "ask_once": "codex_desktop_chat:ask_once",
+    "create_session": "codex_desktop_chat:create_session",
+    "prepare_upload_bundle": "codex_desktop_chat:prepare_upload_bundle"
+  },
+  "dependencies": [],
+  "cli_modules": [
+    "codex_desktop_chat.__main__"
+  ],
+  "state_contract": "Host config and catalog_path; pause, identity, receipt and source-hash protections unchanged",
+  "import_side_effects": "No new service/browser/model starts; capabilities preserve their original explicit call side effects",
+  "compatibility": "New projects use canonical packages and public APIs; existing resident entries are served only by pipeline adapters",
+  "export_contracts": {
+    "bundles__prepare_upload_bundle": {
+      "implementation": "codex_desktop_chat.bundles:prepare_upload_bundle",
+      "signature": "prepare_upload_bundle(files, *, bundle_dir=None)",
+      "description": ""
+    },
+    "bundles__verify_bundle": {
+      "implementation": "codex_desktop_chat.bundles:verify_bundle",
+      "signature": "verify_bundle(path)",
+      "description": "Reject corrupt, encrypted, unsafe, non-regular or oversized archives; return manifest_files (null when absent). Cache reuse also verifies source identity."
+    },
+    "ChatGPTDesktop": {
+      "implementation": "codex_desktop_chat:ChatGPTDesktop",
+      "kind": "constant_or_imported_symbol"
+    },
+    "DesktopChatError": {
+      "implementation": "codex_desktop_chat:DesktopChatError",
+      "kind": "constant_or_imported_symbol"
+    },
+    "ask_once": {
+      "implementation": "codex_desktop_chat:ask_once",
+      "signature": "ask_once(prompt, files=None, answer_timeout=900, *, model='GPT-6', thinking_high=True, state_dir=None, foreground=False, poll_interval=10, upload_timeout=180, bundle_dir=None)",
+      "description": ""
+    },
+    "create_session": {
+      "implementation": "codex_desktop_chat:create_session",
+      "signature": "create_session(provider='codex-chat', **kwargs)",
+      "description": ""
+    },
+    "prepare_upload_bundle": {
+      "implementation": "codex_desktop_chat:prepare_upload_bundle",
+      "kind": "constant_or_imported_symbol"
+    }
+  },
+  "side_effects": "ZIP接口只做文件打包/校验；桌面交互接口需要显式授权，未知提交不重发。",
+  "selection_and_retention": "主科学任务使用GPT网页；此登记工具保留，因为制卡/核验的ZIP准备和核对实际依赖它。桌面交互仍须原显式前台授权，不随整理启动。原工具源码与公开根导入保持兼容。 独立ZIP工具不依赖主流程core；独立安装时显式传bundle_dir或CODEX_CHAT_ZIP_DIR。",
+  "runtime_activation": "No automatic start/resume; existing controls and sole owner remain authoritative",
+  "physical_source_root": "../tools/codex_desktop_chat/codex_desktop_chat",
+  "workspace_project": "codex_desktop_chat",
+  "audit_revision": "2026-10-14: source identity, bounded response turn, delayed anchor, explicit UI permission, receipt transitions and native wheel resources; no live UI validation"
+}

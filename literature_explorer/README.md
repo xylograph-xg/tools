@@ -3,9 +3,9 @@
 面向科研主题的自动文献发现闭环：输入研究主题，跨 OpenAlex / Semantic Scholar 搜索、标准化、去重、相关性排序产出候选论文池；人工标记 interesting 后自动做引文扩展生成下一轮候选。公开接口为 Python 函数 + 三个 CLI 脚本；无 HTTP 服务。纯 Python 标准库，零 pip 依赖。
 
 - 本目录 ID：`literature_explorer`
-- 权威源码：`../../paper/fetch/crawler/literature_explorer`
-- 原始说明：[README.md](../../paper/fetch/crawler/literature_explorer/README.md)
-- Python 导入根：`../../paper/fetch/crawler/literature_explorer`（顶层包目录本身；导入形式为 `import config`、`from connectors.openalex import search_openalex`）
+- 权威源码：`literature_explorer`
+- 原始说明：[README.md](literature_explorer/README.md)
+- Python 导入根：`literature_explorer`（顶层包目录本身；导入形式为 `import config`、`from connectors.openalex import search_openalex`）
 - 维护方规则：[crawler/AGENTS.md](../../paper/fetch/crawler/AGENTS.md)；导出记录：[tool-dependencies.json](../../paper/fetch/crawler/tool-dependencies.json)
 - 已确认使用方：无（2026-09-18 首次登记）
 - 核对日期：2026-09-18，未版本化
@@ -17,7 +17,7 @@ Python 3.10+（代码使用 `list[str] | None` 等语法），无第三方依赖
 | 环境变量 | 谁读取 | 默认及用途 |
 | --- | --- | --- |
 | `LITEXP_IMPORT_ROOT` | 本文的调用方示例 | 无默认值；定位导入根，不是工具原生配置 |
-| `LITEXP_DB` | 工具（import config 时） | `<source_dir>/data/literature.db`，SQLite 路径 |
+| `LITEXP_DB` | 工具（import config 时） | `../../paper/fetch/crawler/literature_explorer/data/literature.db（相邻工作区）`，SQLite 路径 |
 | `OPENALEX_EMAIL` | 工具（每次请求时读 config） | 空；设置后进入 OpenAlex polite pool |
 | `S2_API_KEY` | 工具 | 空；无 key 时 Semantic Scholar 按 1 rps 保守限速 |
 | `LITEXP_EMBEDDING_BASE_URL` / `LITEXP_EMBEDDING_API_KEY` / `LITEXP_EMBEDDING_MODEL` | 工具 | 空；三者同时设置才启用真实 embedding（OpenAI 兼容 `/embeddings` 接口），否则降级为词袋重叠打分 |
@@ -58,7 +58,7 @@ with Store() as store:
 此示例发起真实网络搜索（通常数十秒；无 S2 key 时更慢）。离线验证可运行工具自带测试。先激活 Python 3.10 或更高版本的环境，用 `python3 --version` 确认版本：
 
 ```bash
-cd ../../paper/fetch/crawler/literature_explorer
+cd literature_explorer
 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover tests -v
 ```
 

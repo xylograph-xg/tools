@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "project": "oled_formulas",
+  "version": "1.0.0+review.2",
+  "python_entry": "oled_formulas.api",
+  "python_exports": {
+    "control_pilot": "oled_formulas.formula_only:control_pilot",
+    "enabled": "oled_formulas.formula_only:enabled",
+    "run": "oled_formulas.formula_only:run",
+    "oled_candidate": "oled_formulas.scope:oled_candidate"
+  },
+  "dependencies": [
+    "browser",
+    "codex_desktop_chat",
+    "core",
+    "codex_web_client"
+  ],
+  "cli_modules": [
+    "oled_formulas"
+  ],
+  "physical_source_root": "../tools/oled-formulas/oled_formulas",
+  "workspace_project": "oled_formulas",
+  "state_contract": "Use the authorized formula-only-control.json folder, original queues, receipts, and by-paper results. Display by-paper JSON includes expected_pages, pages_checked, missing_pages, complete, source_batches and failed_batches_at_export. Published formulas carry python_status for static scalar syntax. A confirmed terminal response without text retains the submitted receipt in review. Local publication resumes from publishing. Export schema 3 quarantines contradictory page claims, lists visual-review pages separately from coverage, withholds unconfirmed Python mappings, and distinguishes archival formulas, topic-filtered unverified training_candidates, and scientifically approved training_formulas. Late image warnings re-render every associated paper.",
+  "runtime_activation": "The resident web-cards owner calls run under its exclusive service lock. The CLI controls only the formula queue.",
+  "formula_reload": "During an account recheck, the formula owner can navigate a repeatedly stalled and empty archived tab to its exact URL. Verify the saved response and slot identity, and persist one attempt before navigation.",
+  "attachment_gate": "Persistent OLED-only attachment backoff. Two pre-submit entry failures on distinct slots within five minutes or an explicit attachment-limit error pause fresh admissions. After at least 15 minutes, inspect an eligible existing tab and admit at most one scheduled batch until its own submission is confirmed. Pending collections keep their original receipts. Uses the shared document upload predicate and records each inspected target and result.",
+  "formula_dispatch": "OLED display batches share one registered owner connection and five exclusive in-flight tab assignments. Uploads may overlap, final clicks use the shared lock, and submitted requests are collected on their original tab. A verified empty composer may set and read back native High independently of batch submission; sent or unknown work is protected. A held pre-click attempt on a clean home can release its slot after the previous saved response, live page, and unsent evidence are verified and archived under the submission lock. The held batch stays bound to its original receipt. Completed OLED home slots require frozen receipt provenance, two clean same-document observations at least 30 seconds apart and a final guarded inspection. Prior evidence is archived. Outstanding submissions remain bound. Prior pre-click release archives and saved raw replies are checked before discounting an older claim on the same tab. New admissions favor the earliest planned paper group without altering frozen batches or dropping any pages.",
+  "entry_retry": "At most one re-admission per batch after a later proven trial, matching pre-transfer events and verified original release. Retains original prompt, ZIP, and prior receipt.",
+  "external_runtime": "web_gpt from WEB_GPT_IMPORT_ROOT or sibling chatgpt_playwright, with Playwright 1.63.0.",
+  "slot_recovery": "The sole owner archives bound stalled pages before one read-only revisit of the original URL. Exact stopped replies covering the frozen manifest are saved with review flags. Clear only a locally archived pre-submit draft and uniquely matched content-addressed attachment. Never resubmit a bound request.",
+  "unavailable_slots": "Only the seven entries of unavailable-slot-authorization.json may free an unavailable submitted slot after a verified original GET returns to an authenticated, stable, empty home. Preserve the original receipt in review. No resend.",
+  "app_queue": "App route admits untouched queued batches under original owner lock. Same source, account, attachment and temporary-chat controls. Frozen page JPEGs attach by ordered manifest. Original outputs use the existing per-paper publication contract. OLED 新批次先用 GPT-6.2 Sol Extra High，明确该档额度耗尽且未发送时降为 High。每三小时由公式所有者读取一个 App 窗口新鲜的已登录模型菜单。出现可用 Pro 时，下一批最多新增一个优先 Pro 的并行位置，保留已有可用位置；选档失败的位置回到 Extra High。App 每回合核对实际选档。未收取的批次沿用原回执。 Account verification uses the embedded App session inspector. App route neither starts Chrome nor collects via legacy targets. The owner refills five independent App slots and serializes publication of overlapping papers."
+}

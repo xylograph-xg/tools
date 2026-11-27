@@ -1,0 +1,175 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Codex Desktop Chat tool request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation"
+  ],
+  "properties": {
+    "operation": {
+      "enum": [
+        "status",
+        "ask",
+        "submit",
+        "collect",
+        "verify",
+        "verify-attachments",
+        "prepare"
+      ]
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 31500
+    },
+    "model": {
+      "enum": [
+        "GPT-6",
+        "GPT-5.6 Sol"
+      ],
+      "default": "GPT-6"
+    },
+    "foreground": {
+      "type": "boolean",
+      "default": false
+    },
+    "state_dir": {
+      "type": "string",
+      "minLength": 1
+    },
+    "window_id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "answer_timeout": {
+      "type": "number",
+      "exclusiveMinimum": 0,
+      "default": 900
+    },
+    "poll_interval": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 60,
+      "default": 10
+    },
+    "files": {
+      "type": "array",
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^/",
+        "minLength": 2
+      }
+    },
+    "upload_timeout": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 3600,
+      "default": 180
+    },
+    "bundle_dir": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "ask",
+              "submit"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "prompt",
+          "foreground"
+        ],
+        "properties": {
+          "foreground": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "collect"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "receipt_id",
+          "state_dir"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "verify"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "window_id",
+          "foreground"
+        ],
+        "properties": {
+          "foreground": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "verify-attachments"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "window_id",
+          "state_dir"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "const": "prepare"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "files"
+        ],
+        "properties": {
+          "files": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,12 +1,12 @@
 # Codex App Chat：跨项目调用说明
 
-工具 ID：`codex_desktop_chat`，版本1.0.0，source-reference。权威源码位于 [../../paper/codex_desktop_chat](../../paper/codex_desktop_chat)，原创实现使用 Apple 公共 AX/Unicode API，不依赖探索阶段的 npm/GitHub 工具。
+工具 ID：`codex_desktop_chat`，版本1.0.0，source-reference。权威源码位于 [codex_desktop_chat](codex_desktop_chat)，原创实现使用 Apple 公共 AX/Unicode API，不依赖探索阶段的 npm/GitHub 工具。
 
 ZIP 目录优先取 `CODEX_CHAT_ZIP_DIR`，当前工作区默认使用 `~/process/app-upload-zips`，独立安装按源码根目录下的 `data/app-upload-zips` 回退。
 
-完整契约、并发示例、错误恢复见[调用说明](../../paper/codex_desktop_chat/调用说明.md)，参数见[input.schema.json](../../paper/codex_desktop_chat/input.schema.json)。
+完整契约、并发示例、错误恢复见[调用说明](codex_desktop_chat/调用说明.md)，参数见[input.schema.json](codex_desktop_chat/input.schema.json)。
 
-运行条件：macOS、Python >=3.11、Swift编译器、已登录 Codex App Chat、辅助功能权限。首次编译按源码哈希缓存；无第三方 Python 依赖。将 `../../paper` 加入调用方 PYTHONPATH。
+运行条件：macOS、Python >=3.11、Swift编译器、已登录 Codex App Chat、辅助功能权限。首次编译按源码哈希缓存；无第三方 Python 依赖。将 `.` 加入调用方 PYTHONPATH。
 
 ```python
 from codex_desktop_chat import ask_once
@@ -14,7 +14,7 @@ answer = ask_once("只回复 OK", foreground=True, state_dir="/absolute/private/
 ```
 
 ```bash
-PYTHONPATH=../../paper python3 -m codex_desktop_chat status
+PYTHONPATH=. python3 -m codex_desktop_chat status
 ```
 
 `ask_once`/`ask`返回完整字符串；`submit`返回持久回执、`collect`只收取原窗口。默认 GPT-6 High、10秒轮询、收取900秒；显式可选 GPT-5.6 Sol High，无自动回退。错误抛 DesktopChatError，包含 code/receipt_id/may_have_sent；CLI单JSON、成功0/错误2。未给 foreground=True 的新建/发送返回 foreground_required，不作隐式前台操作。
@@ -42,7 +42,7 @@ files输入自动先打包，实际仅上传一个ZIP，回执保存包/输入�
 
 ## 2026-10-13 独立子项目与API入口
 
-原根导入、ask/submit/collect签名和唯一源码位置保持。新增可选 `codex_desktop_chat.api`，接口与完整实现清单见 [源码项目README](../../paper/codex_desktop_chat/README.md) 和 [interface.json](../../paper/codex_desktop_chat/interface.json)。网页制卡/核验只复用ZIP准备/校验，桌面操作仍需原显式授权。测试已迁入工具自己的tests；本轮只有离线回归、接口身份和构建验证，没有新真实桌面Chat、ZIP上传或科学验收。
+原根导入、ask/submit/collect签名和唯一源码位置保持。新增可选 `codex_desktop_chat.api`，接口与完整实现清单见 [源码项目README](codex_desktop_chat/README.md) 和 [interface.json](codex_desktop_chat/interface.json)。网页制卡/核验只复用ZIP准备/校验，桌面操作仍需原显式授权。测试已迁入工具自己的tests；本轮只有离线回归、接口身份和构建验证，没有新真实桌面Chat、ZIP上传或科学验收。
 
 ## 八项目归并下的ZIP目录
 

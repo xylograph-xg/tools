@@ -1,0 +1,21 @@
+{
+  "project": "codex_web_client",
+  "version": "1.3.0+proprobe.1",
+  "dependencies": [],
+  "python_exports": {
+    "Client": "codex_web_client.api:Client"
+  },
+  "cli": "python3 -m codex_web_client",
+  "operations": [
+    "status",
+    "submit",
+    "work",
+    "get"
+  ],
+  "model": "chatgpt-web/gpt-6.2-sol",
+  "effort": "high",
+  "transport": "local Codex CLI and authenticated loopback Codex Web GPT Full bridge",
+  "image_transport": "submit(images=..., guarded=True); run_once(key=..., before_send=...). Ordered image SHA-256 rechecked before dispatch.",
+  "guarded_model_order": "受保护的分档派发使用 pro_first=True。allow_pro=False 只在 GPT-6.2 Sol Extra High、High 中按额度选择；allow_pro=True 保留 GPT-6 Pro 优先。明确未发送的模型专属额度错误允许原批继续，其他不确定提交存入复核。",
+  "parallel_dispatch": "OLED 公式队列在同一 App 所有者下使用五个并行位置。run_once(key=..., before_send=..., pro_first=True, parallel_slot=0..4) 分别锁定批号和位置，默认串行工作进程与并行模式互斥。各批独立收取，所有者依次发布单篇结果，并在空位补入待办。实际 App 活动数读取 /healthz 的 active_browser_turns。"
+}

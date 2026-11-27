@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paper-codex-desktop-chat"
+version = "1.0.0"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools]
+packages = ["codex_desktop_chat", "codex_desktop_chat.tests"]
+package-dir = {"codex_desktop_chat" = "."}
+
+[tool.setuptools.package-data]
+codex_desktop_chat = ["native.swift", "input.schema.json", "调用说明.md", "interface.json"]
