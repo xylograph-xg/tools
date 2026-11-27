@@ -1285,7 +1285,7 @@
       "files_sha256": {
         "api.py": "f775e1c2931f73bededb1099e2ee3c0a0374f0c7ebf8fa5f96ee8df252fcf5ce",
         "interface.json": "12c45367d1500ba4f9f154c9b1d36ad8f959bd937083aed82bc5cc891c061122",
-        "src/web_gpt_adapter.py": "70742545cd03328f17cd51f77bab906059e20ae345df08d0046eda53efb53c33"
+        "src/web_gpt_adapter.py": "5794eb6c649cc40a16b3cff06e360a39ef3e3e9ac29d04bf38c85148689017a0"
       }
     },
     {
