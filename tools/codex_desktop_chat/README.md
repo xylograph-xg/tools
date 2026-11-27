@@ -2,6 +2,8 @@
 
 工具 ID：`codex_desktop_chat`，版本1.0.0，source-reference。权威源码位于 [/Users/xiaoyanhao/project/paper/codex_desktop_chat](/Users/xiaoyanhao/project/paper/codex_desktop_chat)，原创实现使用 Apple 公共 AX/Unicode API，不依赖探索阶段的 npm/GitHub 工具。
 
+ZIP 目录优先取 `CODEX_CHAT_ZIP_DIR`，当前工作区默认使用 `~/process/app-upload-zips`，独立安装按源码根目录下的 `data/app-upload-zips` 回退。
+
 完整契约、并发示例、错误恢复见[调用说明](/Users/xiaoyanhao/project/paper/codex_desktop_chat/调用说明.md)，参数见[input.schema.json](/Users/xiaoyanhao/project/paper/codex_desktop_chat/input.schema.json)。
 
 运行条件：macOS、Python >=3.11、Swift编译器、已登录 Codex App Chat、辅助功能权限。首次编译按源码哈希缓存；无第三方 Python 依赖。将 `/Users/xiaoyanhao/project/paper` 加入调用方 PYTHONPATH。
@@ -44,7 +46,7 @@ files输入自动先打包，实际仅上传一个ZIP，回执保存包/输入�
 
 ## 八项目归并下的ZIP目录
 
-公开签名和独立工具源码根保持。默认ZIP目录从workspace.json的physical_roots.data取得，当前为paper/infrastructure/data/app-upload-zips；无工作区清单时保留原data/app-upload-zips，CODEX_CHAT_ZIP_DIR仍优先。工具不依赖core。1761项离线回归及307接口对象身份检查通过；本轮没有新的桌面调用、上传或科学验收。
+公开签名和独立工具源码根保持。当时默认ZIP目录从workspace.json的physical_roots.data取得，位置为paper/infrastructure/data/app-upload-zips；无工作区清单时保留原data/app-upload-zips，CODEX_CHAT_ZIP_DIR仍优先。工具不依赖core。1761项离线回归及307接口对象身份检查通过；本轮没有新的桌面调用、上传或科学验收。
 
 
 ## 2026-10-14 审计整改

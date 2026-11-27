@@ -17,7 +17,7 @@
 - `Client.get(self, key)` — [api.py:219](/Users/xiaoyanhao/project/paper/codex_web_client/api.py:219)
 - `Client.counts(self)` — [api.py:232](/Users/xiaoyanhao/project/paper/codex_web_client/api.py:232)
 - `Client.dispatch_status(self)` — [api.py:236](/Users/xiaoyanhao/project/paper/codex_web_client/api.py:236)
-- `Client.run_once(self, *, before_send=…, key=…, pro_first=…, parallel_slot=…)` — [api.py:265](/Users/xiaoyanhao/project/paper/codex_web_client/api.py:265)
+- `Client.run_once(self, *, before_send=…, key=…, pro_first=…, parallel_slot=…, allow_pro=…)` — [api.py:265](/Users/xiaoyanhao/project/paper/codex_web_client/api.py:265)
 - `ClientTests.setUp(self)` — [tests/test_client.py:13](/Users/xiaoyanhao/project/paper/codex_web_client/tests/test_client.py:13)
 - `ClientTests.evidence(self, text, *, command=…, message=…, completed=…, exited=…)` — [tests/test_client.py:18](/Users/xiaoyanhao/project/paper/codex_web_client/tests/test_client.py:18)
 - `ClientTests.test_finished_without_command(self)` — [tests/test_client.py:35](/Users/xiaoyanhao/project/paper/codex_web_client/tests/test_client.py:35)
@@ -39,19 +39,20 @@
 - `ClientTests.test_app_upload_quota_blocks_next_dispatch_across_models_and_restart(self)` — [tests/test_client.py:164](/Users/xiaoyanhao/project/paper/codex_web_client/tests/test_client.py:164)
 - `ClientTests.test_five_parallel_keys_keep_exclusive_job_and_slot_locks(self)` — [tests/test_client.py:178](/Users/xiaoyanhao/project/paper/codex_web_client/tests/test_client.py:178)
 - `ClientTests.test_parallel_success_keeps_another_jobs_quota_cooldown(self)` — [tests/test_client.py:207](/Users/xiaoyanhao/project/paper/codex_web_client/tests/test_client.py:207)
+- `ClientTests.test_absent_pro_starts_extra_high_then_high_on_unsent_tier_quota(self)` — [tests/test_client.py:216](/Users/xiaoyanhao/project/paper/codex_web_client/tests/test_client.py:216)
 
 ## 文件 SHA-256
 
 ```json
 {
-  "README.md": "b8c87ea32979d44b86e96312fcd8ede05d20e5c0b3012bdffb42d277f93f473f",
+  "README.md": "e8095fb9c33ba26e23d7ba9bb06ad6be5d7758fbac3ff8b9f881e648c6d48496",
   "__init__.py": "e6a2cd2a4b36d0a21213b66d110e3fd37562efa8d5b36f41ac85db52d982c7a4",
   "__main__.py": "97194f8f36876c9aeb75cc510efe37232f308d92c8f82160e37d7ae11072d3a4",
-  "api.py": "291cb616ed91cfa63aa6e41168394ec5722b567e853419f5f487949efbd74455",
-  "interface.json": "42071a79ea2052caa473f09b6e3d15d1a4dca001419418c3fe293299be2e92ae",
+  "api.py": "19b72e8096437ba9e0d8161f9b515ec2193a4f6bb8e25d7b835bc8376650eb06",
+  "interface.json": "c45e54d270377719d4f81b5f934a11ce0af09ad2dd507e0f14ae453e814331ef",
   "pyproject.toml": "ad41b5014e61f09ea8ba291caac35a20e1e119de7a823fa0735e98b0e377ccd5",
-  "setup.cfg": "9e167da843f3f44fe54e93b50e0f69e22c785b72884bf2a8129379b449c258e3",
+  "setup.cfg": "0b76feba0424280a3c635eecf1eef5b2b54f3a70f7d1d7041dc01c647f5e365e",
   "tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-  "tests/test_client.py": "81841c488eac6f3b5da9730d8c6cea0edeb063971d1d590d24e8d5c078756d9a"
+  "tests/test_client.py": "4b83c3591c24a13cabbe6ebe3fb23959bbbc16fd2190420ed0b3904b8001ce7d"
 }
 ```

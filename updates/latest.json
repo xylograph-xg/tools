@@ -497,13 +497,13 @@
       "files_sha256": {
         "AUDIT_RUNS/20261023-134830-a2a94b/AUDIT.md": "cf3aba09a722f474e55988691eac60f1c2186c29f325911b48fe9edcc3120b0a",
         "AUDIT_RUNS/20261023-140721-ff0c07/AUDIT.md": "7a7fa031988beb0fb1d562679598fe11670121b62a238ceb7a33849e6a1e1f0d",
-        "README.md": "bc7b23637715f21e5928350442dc3afff1ec61e94f4ea75a71941194452f21c5",
+        "README.md": "70deaa93db0f593f65cc812b167b4d135dbcd2dbe96acf3b19f1db23c5acde6e",
         "__init__.py": "1b6b732b80c86a954ad29dd5bb7a4218cec3b72952b434fd2b51a58e2318dd23",
         "__main__.py": "b5d18132b48c05fc490bc6b1500999b9f1b3978f2107b97c4600e4d522595647",
         "api.py": "f45a4174ca17d8fe5c178d5e21c2b5e84f28974e5934b012b68cbf613ff19e1d",
         "attachments.py": "2aa166be16069a11f8e5006828f0975b38ec3f213511cf42de72be1282e59f47",
         "backend.py": "f8b49e67e6cb070c5456d595de284c72d15fe09efa678e927390f7d7a683244d",
-        "bundles.py": "c48ee08c16f410f7839d570244f246bcde410d3e8369d4b23e4fabf176ebc962",
+        "bundles.py": "c6d2e1a6fb03520f13ec1525c6a295824195bd7a637a1e14f56df06ce59f9d31",
         "core.py": "a88e0bfaee157ce4f9d54a5e1ee170ff397217506f4351b8b62ce9892ec5dac4",
         "errors.py": "8aeb8fc64fe42e70892b946a983c745d79857767f433601e9aca7450f41feef8",
         "examples/ask_codex_chat.py": "771dc79f6b33ec7da4a3093a9cb0a42f80db3b097fee85ad3e633a57d13f5d86",
@@ -517,7 +517,7 @@
         "tests/test_codex_desktop_attachments.py": "3cace24e20399dae866c641b6ef05d58e91cb2cbdcc6356ae17fac11ee0da773",
         "tests/test_codex_desktop_bundles.py": "da614705c145f8335c86757e113f27b3cddc43f7bc72cca5f1c9a8e8620378e8",
         "tests/test_codex_desktop_chat.py": "0fbaccc58d0d13bfa67ba047e1bad6c73efce05905e4abfdf3e9e758a7c1a0d9",
-        "调用说明.md": "5c2e0940ececa10bfb662dbaf3bfd289679d45cf60ba12a4002da1ed82f15e2f"
+        "调用说明.md": "af7967dad7c92d42f2cfe7af3da988296187888f23c8f36be524fdccb00327fc"
       },
       "changes": [],
       "declarations": [
@@ -1070,15 +1070,15 @@
     },
     "codex_web_client": {
       "files_sha256": {
-        "README.md": "b8c87ea32979d44b86e96312fcd8ede05d20e5c0b3012bdffb42d277f93f473f",
+        "README.md": "e8095fb9c33ba26e23d7ba9bb06ad6be5d7758fbac3ff8b9f881e648c6d48496",
         "__init__.py": "e6a2cd2a4b36d0a21213b66d110e3fd37562efa8d5b36f41ac85db52d982c7a4",
         "__main__.py": "97194f8f36876c9aeb75cc510efe37232f308d92c8f82160e37d7ae11072d3a4",
-        "api.py": "291cb616ed91cfa63aa6e41168394ec5722b567e853419f5f487949efbd74455",
-        "interface.json": "42071a79ea2052caa473f09b6e3d15d1a4dca001419418c3fe293299be2e92ae",
+        "api.py": "19b72e8096437ba9e0d8161f9b515ec2193a4f6bb8e25d7b835bc8376650eb06",
+        "interface.json": "c45e54d270377719d4f81b5f934a11ce0af09ad2dd507e0f14ae453e814331ef",
         "pyproject.toml": "ad41b5014e61f09ea8ba291caac35a20e1e119de7a823fa0735e98b0e377ccd5",
-        "setup.cfg": "9e167da843f3f44fe54e93b50e0f69e22c785b72884bf2a8129379b449c258e3",
+        "setup.cfg": "0b76feba0424280a3c635eecf1eef5b2b54f3a70f7d1d7041dc01c647f5e365e",
         "tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tests/test_client.py": "81841c488eac6f3b5da9730d8c6cea0edeb063971d1d590d24e8d5c078756d9a"
+        "tests/test_client.py": "4b83c3591c24a13cabbe6ebe3fb23959bbbc16fd2190420ed0b3904b8001ce7d"
       },
       "changes": [],
       "declarations": [
@@ -1120,7 +1120,7 @@
         {
           "file": "api.py",
           "line": 265,
-          "signature": "Client.run_once(self, *, before_send=…, key=…, pro_first=…, parallel_slot=…)"
+          "signature": "Client.run_once(self, *, before_send=…, key=…, pro_first=…, parallel_slot=…, allow_pro=…)"
         },
         {
           "file": "tests/test_client.py",
@@ -1226,28 +1226,16 @@
           "file": "tests/test_client.py",
           "line": 207,
           "signature": "ClientTests.test_parallel_success_keeps_another_jobs_quota_cooldown(self)"
+        },
+        {
+          "file": "tests/test_client.py",
+          "line": 216,
+          "signature": "ClientTests.test_absent_pro_starts_extra_high_then_high_on_unsent_tier_quota(self)"
         }
       ]
     }
   },
   "module_observations": [
-    {
-      "consumer": "chatgpt_playwright",
-      "provider": "oled",
-      "files_sha256": {
-        "app/tools/structured_ingestion.py": "3d2fcd2680bd40d30538a31ffc901309110f6129b6c031506a2e3962242a8b64",
-        "app/tools/graph_storage.py": "370e3335504c744d36c7e13dd67e7338a1893fa973f086375ae9ee37b57ede17"
-      }
-    },
-    {
-      "consumer": "oled",
-      "provider": "chatgpt_playwright",
-      "files_sha256": {
-        "chatgpt_core.py": "7b3ed737aa935242fb65d1f332bd31bf1a24619e778a828a93d9642ba181e8ce",
-        "submit.py": "6b21b369b0754eb27ac608d316db5f2886ea1e7b234657db218d93ad423f20c3",
-        "config.py": "6f1b748e8b0ef655e8ee14d14f2b2e639cb24ddcf0753651d16df6a0112e0650"
-      }
-    },
     {
       "consumer": "paper",
       "provider": "crawler",
@@ -1302,17 +1290,6 @@
     },
     {
       "consumer": "paper",
-      "provider": "chatgpt_playwright",
-      "files_sha256": {
-        "web_gpt/core.py": "a1affc853a907e3cb18e6bd0d1bd34d404f0628b77f226616403ebaba4e833a8",
-        "web_gpt/qwen.py": "f0102a010aa80946e518fd8eb99d07dcbb0f343d449b5e48ba5375733f11d33d",
-        "web_gpt/settings.py": "c64acfe3c4a28b8cce4b1c48aa0410390a1e09881c373069c53e69f8fa0cd871",
-        "web_gpt/submission.py": "ae3ffef97b961ce0359236434f49dd572f7e52a226a65b75611de718a2957e83",
-        "web_gpt/capacity.py": "64a23f650ac9c3b3d10771d1ffee5db173d165015d730bac5c9725bef4a5b514"
-      }
-    },
-    {
-      "consumer": "paper",
       "provider": "paper",
       "files_sha256": {
         "../literature/api.py": "1a4236ddfe85bc731f87e98ac6784342181669bcef6663ec82719fa39363b2d2",
@@ -1342,7 +1319,7 @@
       "files_sha256": {
         "../oled_formulas/api.py": "375389485c88b5ec6e522972de9fec6c74d48df1e84f75c43e9cb3a703b491b5",
         "../oled_formulas/__main__.py": "f22cca0108b4a4d51501c889486467f8ad7529f9a8eb67fe56348fe464d8f19b",
-        "../oled_formulas/interface.json": "ec493a5f7d9b6ce8220672696dac5f889146ece6596325fd528c6e2ae3245515"
+        "../oled_formulas/interface.json": "9c790f8d9535187944a8f8c05f5f37d41453d623c5527ac4f8a91fc7701efe2d"
       }
     }
   ],

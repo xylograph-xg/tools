@@ -126,13 +126,13 @@
 {
   "AUDIT_RUNS/20261023-134830-a2a94b/AUDIT.md": "cf3aba09a722f474e55988691eac60f1c2186c29f325911b48fe9edcc3120b0a",
   "AUDIT_RUNS/20261023-140721-ff0c07/AUDIT.md": "7a7fa031988beb0fb1d562679598fe11670121b62a238ceb7a33849e6a1e1f0d",
-  "README.md": "bc7b23637715f21e5928350442dc3afff1ec61e94f4ea75a71941194452f21c5",
+  "README.md": "70deaa93db0f593f65cc812b167b4d135dbcd2dbe96acf3b19f1db23c5acde6e",
   "__init__.py": "1b6b732b80c86a954ad29dd5bb7a4218cec3b72952b434fd2b51a58e2318dd23",
   "__main__.py": "b5d18132b48c05fc490bc6b1500999b9f1b3978f2107b97c4600e4d522595647",
   "api.py": "f45a4174ca17d8fe5c178d5e21c2b5e84f28974e5934b012b68cbf613ff19e1d",
   "attachments.py": "2aa166be16069a11f8e5006828f0975b38ec3f213511cf42de72be1282e59f47",
   "backend.py": "f8b49e67e6cb070c5456d595de284c72d15fe09efa678e927390f7d7a683244d",
-  "bundles.py": "c48ee08c16f410f7839d570244f246bcde410d3e8369d4b23e4fabf176ebc962",
+  "bundles.py": "c6d2e1a6fb03520f13ec1525c6a295824195bd7a637a1e14f56df06ce59f9d31",
   "core.py": "a88e0bfaee157ce4f9d54a5e1ee170ff397217506f4351b8b62ce9892ec5dac4",
   "errors.py": "8aeb8fc64fe42e70892b946a983c745d79857767f433601e9aca7450f41feef8",
   "examples/ask_codex_chat.py": "771dc79f6b33ec7da4a3093a9cb0a42f80db3b097fee85ad3e633a57d13f5d86",
@@ -146,6 +146,6 @@
   "tests/test_codex_desktop_attachments.py": "3cace24e20399dae866c641b6ef05d58e91cb2cbdcc6356ae17fac11ee0da773",
   "tests/test_codex_desktop_bundles.py": "da614705c145f8335c86757e113f27b3cddc43f7bc72cca5f1c9a8e8620378e8",
   "tests/test_codex_desktop_chat.py": "0fbaccc58d0d13bfa67ba047e1bad6c73efce05905e4abfdf3e9e758a7c1a0d9",
-  "调用说明.md": "5c2e0940ececa10bfb662dbaf3bfd289679d45cf60ba12a4002da1ed82f15e2f"
+  "调用说明.md": "af7967dad7c92d42f2cfe7af3da988296187888f23c8f36be524fdccb00327fc"
 }
 ```

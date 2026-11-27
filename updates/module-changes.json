@@ -6,7 +6,7 @@
       "files_sha256": {
         "../oled_formulas/api.py": "375389485c88b5ec6e522972de9fec6c74d48df1e84f75c43e9cb3a703b491b5",
         "../oled_formulas/__main__.py": "f22cca0108b4a4d51501c889486467f8ad7529f9a8eb67fe56348fe464d8f19b",
-        "../oled_formulas/interface.json": "ec493a5f7d9b6ce8220672696dac5f889146ece6596325fd528c6e2ae3245515"
+        "../oled_formulas/interface.json": "9c790f8d9535187944a8f8c05f5f37d41453d623c5527ac4f8a91fc7701efe2d"
       }
     }
   ],

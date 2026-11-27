@@ -1,3 +1,7 @@
+## 2026-11-27 已删除项目的登记清理
+
+从 projects.json 移除 chatgpt_playwright、lifelog、oled 和 question 的项目入口（规则与依赖清单）。从 codex_desktop_chat 使用方移除 chatgpt_playwright；从 paper 的模块依赖移除该项目提供的 core、qwen、settings、submission、capacity。原项目路径均已删除。历史联动状态中的 chatgpt_playwright 与 oled 相互引用已撤下；旧状态和关系两端可在清理前的 tools 提交 7054d91、paper 提交 3abb8ea 查证。paper 旧代码的 web_gpt 导入在其外部依赖中标记为缺失。
+
 ## 2026-11-27 OLED App 模型菜单
 
 受保护的分档派发使用 pro_first=True。allow_pro=False 只在 GPT-6.2 Sol Extra High、High 中按额度选择；allow_pro=True 保留 GPT-6 Pro 优先。明确未发送的模型专属额度错误允许原批继续，其他不确定提交存入复核。
@@ -681,3 +685,11 @@ paper/literature directions-rules-1.4.33/0.5.27：跨页重复页眉与正文科
 - 2026-11-27：源码审查 codex_web_client。health 返回 App 服务 PID 供会话归属核对；未使用服务健康状态替代登录证据。并发、回退及会话变化测试通过。（命令未执行业务验收。）
 
 - 2026-11-27：使用方核对 paper → codex_web_client。App 专用队列核对服务与启动器身份，忙时以近期同会话已确认登录或本队成功回执补位；服务变化重新核对。（命令未执行业务验收。）
+
+- 2026-11-27：源码审查 codex_desktop_chat。按 1.0.0 打包配置和 bundles.default_bundle_dir 核对 ZIP 目录优先级、公开函数及工具卡；50 项离线回归通过。（命令未执行业务验收。）
+
+- 2026-11-27：源码审查 codex_web_client。按 1.3.0+proprobe.1 的 API、接口清单和分发版本核对 run_once 的 allow_pro 与定向并行参数；19 项离线回归通过。（命令未执行业务验收。）
+
+- 2026-11-27：使用方核对 paper → codex_desktop_chat。核对 formula_pilot、formula_only 的打包入口及 collective_page_restart 的 verify_bundle 调用；旧 ZIP 仍按原路径校验。未进行桌面外发。（命令未执行业务验收。）
+
+- 2026-11-27：使用方核对 paper → codex_web_client。核对 oled_formulas/app_queue.py 按批传入 key、before_send、parallel_slot 和 allow_pro，6 项 App 队列隔离回归通过；未派发真实网页任务。（命令未执行业务验收。）

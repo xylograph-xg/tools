@@ -34,9 +34,7 @@ python3 all/setup.py
 
 ## 已落地的双向链接
 
-`paper/article`、`chatgpt_playwright`、`lifelog`、`oled`、`paper/crawler`、`paper/read`、`paper`、`question` 都已加入 `AGENTS.md` 和 `tool-dependencies.json`。源项目的规则要求：修改已登记接口时，同一任务更新 tools 工具卡、清单、变更记录及受影响使用方；tools 通过 [projects.json](projects.json)、工具的 `owner_project` 和 `consumers` 反向定位项目。
-
-八个项目也已加入 all 公共接入包。当前关系与边界见 [双向联动状态](docs/双向联动状态.md)。
+目前登记四个项目入口：`article`、`crawler`、`read` 和 `paper`，都位于 paper 工作区。各入口的规则与依赖清单见[双向联动状态](docs/双向联动状态.md)。
 
 ## 全局检查与更新
 

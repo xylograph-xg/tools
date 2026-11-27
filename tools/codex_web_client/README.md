@@ -1,6 +1,6 @@
 # Codex Web GPT 的 Python 客户端
 
-工具编号为 `codex_web_client`，维护方为 paper，采用唯一源码引用。版本 1.1.0 提供持久提交、串行派发、原回执查询和可选结果核对。[权威使用说明](/Users/xiaoyanhao/project/paper/codex_web_client/README.md)　[接口清单](/Users/xiaoyanhao/project/paper/codex_web_client/interface.json)
+工具编号为 `codex_web_client`，维护方为 paper，采用唯一源码引用。版本 1.3.0+proprobe.1 提供持久提交、默认串行和定向并行派发、原回执查询和可选结果核对。[权威使用说明](/Users/xiaoyanhao/project/paper/codex_web_client/README.md)　[接口清单](/Users/xiaoyanhao/project/paper/codex_web_client/interface.json)
 
 在 macOS 使用 Python 3.9+，运行时只依赖标准库。实际网页任务由 PATH 中的 Codex CLI 和已登录、Full 模式且已接入 Codex Native2 的桌面应用执行。默认本机端口 17841，可设置状态目录、端口、超时。状态目录由当前用户独占。
 
@@ -12,7 +12,7 @@ python3 -m codex_web_client work --once
 python3 -m codex_web_client get probe-001
 ```
 
-Python 使用 `from codex_web_client.api import Client`。重复编号与相同参数返回原回执。工作进程串行。待复核后的新派发跨重启冷却 30 秒，连续故障最长延至 300 秒。空队列返回 idle，服务离线返回 unavailable 并保留队列，证据缺失的请求进入 review。常驻循环由调用者显式运行。输入和证据保存于本机，派发会在真实网页产生任务。
+Python 使用 `from codex_web_client.api import Client`。重复编号与相同参数返回原回执。默认工作进程串行。待复核后的新派发跨重启冷却 30 秒，连续故障最长延至 300 秒。空队列返回 idle，服务离线返回 unavailable 并保留队列，证据缺失的请求进入 review。常驻循环由调用者显式运行。输入和证据保存于本机，派发会在真实网页产生任务。
 
 2026-11-27 实测桌面 6.2.0。核对了随机文件读取和 JSON 预期字段，实测错误字段被保留待复核。12 项离线回归通过，覆盖短时单机运行，未做全天耐久测试。上游为 MIT 许可证，本包通过正常客户端入口调用。[上游源码](https://github.com/miuuyy/codex-chatgpt-web/tree/232cddd)
 

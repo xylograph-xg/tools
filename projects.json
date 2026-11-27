@@ -1,29 +1,11 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-18",
+  "updated_at": "2026-11-27",
   "description": "项目双向链接索引；具体导出/依赖以各项目 tool-dependencies.json 为准。无后台同步。",
   "projects": [
     {
       "name": "article",
       "root": "/Users/xiaoyanhao/project/paper/infrastructure/article",
-      "rules_file": "AGENTS.md",
-      "manifest_file": "tool-dependencies.json"
-    },
-    {
-      "name": "chatgpt_playwright",
-      "root": "/Users/xiaoyanhao/project/chatgpt_playwright",
-      "rules_file": "AGENTS.md",
-      "manifest_file": "tool-dependencies.json"
-    },
-    {
-      "name": "lifelog",
-      "root": "/Users/xiaoyanhao/project/lifelog",
-      "rules_file": "AGENTS.md",
-      "manifest_file": "tool-dependencies.json"
-    },
-    {
-      "name": "oled",
-      "root": "/Users/xiaoyanhao/project/oled",
       "rules_file": "AGENTS.md",
       "manifest_file": "tool-dependencies.json"
     },
@@ -42,12 +24,6 @@
     {
       "name": "paper",
       "root": "/Users/xiaoyanhao/project/paper/infrastructure",
-      "rules_file": "AGENTS.md",
-      "manifest_file": "tool-dependencies.json"
-    },
-    {
-      "name": "question",
-      "root": "/Users/xiaoyanhao/project/question",
       "rules_file": "AGENTS.md",
       "manifest_file": "tool-dependencies.json"
     }
