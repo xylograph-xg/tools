@@ -13,7 +13,7 @@
       "source_docs": [
         "../paper/fetch/crawler/literature_explorer/README.md"
       ],
-      "guide": "tools/literature_explorer/README.md",
+      "guide": "literature_explorer/README.md",
       "interfaces": {
         "python": {
           "package": null,
@@ -200,7 +200,7 @@
         "../paper/codex_desktop_chat/调用说明.md",
         "../paper/codex_desktop_chat/README.md"
       ],
-      "guide": "tools/codex_desktop_chat/README.md",
+      "guide": "codex_desktop_chat/README.md",
       "interfaces": {
         "python": {
           "package": "codex_desktop_chat",
@@ -507,9 +507,9 @@
         }
       ],
       "wheel_distribution": {
-        "path": "distributions/oled-formulas/wheels/paper_codex_desktop_chat-1.0.0-py3-none-any.whl",
-        "checksums": "distributions/oled-formulas/SHA256SUMS",
-        "guide": "distributions/oled-formulas/README.md"
+        "path": "oled-formulas/wheels/paper_codex_desktop_chat-1.0.0-py3-none-any.whl",
+        "checksums": "oled-formulas/SHA256SUMS",
+        "guide": "oled-formulas/README.md"
       }
     },
     {
@@ -522,7 +522,7 @@
       "source_docs": [
         "../paper/codex_web_client/README.md"
       ],
-      "guide": "tools/codex_web_client/README.md",
+      "guide": "codex_web_client/README.md",
       "interfaces": {
         "python": {
           "package": "codex_web_client",
@@ -672,9 +672,9 @@
         }
       ],
       "wheel_distribution": {
-        "path": "distributions/oled-formulas/wheels/codex_web_client-1.3.0+proprobe.1-py3-none-any.whl",
-        "checksums": "distributions/oled-formulas/SHA256SUMS",
-        "guide": "distributions/oled-formulas/README.md"
+        "path": "oled-formulas/wheels/codex_web_client-1.3.0+proprobe.1-py3-none-any.whl",
+        "checksums": "oled-formulas/SHA256SUMS",
+        "guide": "oled-formulas/README.md"
       }
     }
   ],
