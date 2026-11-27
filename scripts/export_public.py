@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -67,6 +68,11 @@ def public_text(project, name, text):
             row.pop("wheel_distribution", None)
             row.pop("verification_history", None)
         text = dump(data)
+    elif project == "tools" and name == "README.md":
+        text = text[:text.index("## 可安装工具包")] + text[text.index("## 已有工具"):text.index("## 四项目接口提取评估")]
+        text += "\n公开版包含工具说明、源代码和对应的接口索引。\n"
+    elif project == "tools" and name.startswith("tools/") and name.endswith("README.md"):
+        text = "\n".join(line for line in text.split("\n") if "](../../distributions/" not in line)
     # Test fixtures keep stable identities without publishing the original conversation IDs.
     text = SESSION.sub(lambda m: m[1] + "00000000-0000-4000-8000-" +
                        hashlib.sha256(m[2].encode()).hexdigest()[:12], text)
@@ -117,11 +123,12 @@ def rebuild_index(destination):
             manifest.write_text(dump(data))
     registry_file.write_text(dump(registry))
     # Generate in isolation. Only the resulting tracked files enter the published tree.
-    subprocess.run(["python3", hub / "scripts/sync_tools.py", "update"], check=True)
+    env = dict(os.environ, PYTHONDONTWRITEBYTECODE="1")
+    subprocess.run(["python3", hub / "scripts/sync_tools.py", "update"], check=True, env=env)
     backups = hub / ".sync-backups"
     if backups.exists():
         shutil.rmtree(backups)
-    subprocess.run(["python3", hub / "scripts/sync_tools.py", "check"], check=True)
+    subprocess.run(["python3", hub / "scripts/sync_tools.py", "check"], check=True, env=env)
 
 
 def main():
