@@ -26,6 +26,12 @@
       "root": "../paper/infrastructure",
       "rules_file": "AGENTS.md",
       "manifest_file": "tool-dependencies.json"
+    },
+    {
+      "name": "plot",
+      "root": "../plot",
+      "rules_file": "AGENTS.md",
+      "manifest_file": "tool-dependencies.json"
     }
   ]
 }

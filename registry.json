@@ -840,6 +840,46 @@
           }
         }
       ]
+    },
+    {
+      "id": "voigt_profile",
+      "name": "Voigt 线形",
+      "summary": "计算无量纲 Voigt 线形。",
+      "source_dir": "voigt_profile/src",
+      "guide": "voigt_profile/README.md",
+      "source_docs": [
+        "voigt_profile/README.md"
+      ],
+      "interfaces": {
+        "typescript": [
+          "voigtReal(x: number, y: number): number"
+        ]
+      },
+      "source_files_sha256": {
+        "voigt.ts": "3b3cf7967918298b902f7b0feb1aa23f3fea936f20a086c43a35bdc141cb75dd"
+      },
+      "consumers": [
+        {
+          "project_name": "plot",
+          "project_root": "../plot",
+          "dependency_file": "tool-dependencies.json",
+          "integration": "TypeScript 模块导入",
+          "status": "source_inspected",
+          "inspected_at": "2026-11-27",
+          "verified_at": null,
+          "verification": null
+        }
+      ],
+      "sync_state": "current",
+      "current_source_files_sha256": {
+        "voigt.ts": "3b3cf7967918298b902f7b0feb1aa23f3fea936f20a086c43a35bdc141cb75dd"
+      },
+      "owner_project": {
+        "name": "plot",
+        "root": "../plot",
+        "manifest_file": "tool-dependencies.json",
+        "rules_file": "AGENTS.md"
+      }
     }
   ],
   "projects_index": "projects.json"

@@ -1,3 +1,7 @@
+## 2026-11-27 Voigt 线形工具
+
+从 plot 提取 [voigt_profile](voigt_profile/README.md)，保留光谱分峰调用接口。
+
 # 2026-11-27 工具目录整理
 
 工具说明、OLED 安装包、登记检查和公开导出各占一个一级目录。项目从 AGENTS.md 直接进入工具说明，首次登记与后续更新均已取消 all 分发。同步报告、历史审核及回滚备份迁入 ~/process/tools/。
