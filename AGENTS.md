@@ -13,3 +13,5 @@
 - 新项目统一复制 all/ 并运行 all/setup.py；修改接口或公共规则后必须运行 python3 scripts/sync_tools.py update，再执行上述只读检查。源码漂移先核对实现/说明/使用方，再按 all/RULES.md 执行 accept/acknowledge；禁止为消除告警盲目刷新基线。
 
 公开合并仓库的首次发布和后续更新按[公开源码发布流程](docs/公开源码发布.md)执行。
+
+公开仓库 `xylograph-xg/project` 的可复制链接清单位于 `~/Desktop/prompts/GitHub项目链接.txt`。公开目录层级或 `tools/` 内文件发生增删、移动、改名时，在同一发布任务中刷新清单。按远端 `main` 的已确认提交读取完整递归 Git 树，收录全部目录及 `tools/` 内全部文件；一级目录和 `tools/tools/` 下每个工具的入口优先列出。每条链接独占一行，使用随 `main` 更新的 GitHub 地址。写回前核对分支版本、目录树完整性、路径去重及新增和移除项；读取失败或清单不完整时保留原文件。
