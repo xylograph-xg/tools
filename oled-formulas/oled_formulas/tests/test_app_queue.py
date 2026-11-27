@@ -72,7 +72,7 @@ class AppQueueTests(unittest.TestCase):
         from oled_formulas import formula_queue,display_equations
         with tempfile.TemporaryDirectory() as d:
             root=Path(d)
-            control=dict(folder=d,transport='codex_web_gpt',extraction=display_equations.POLICY)
+            control=dict(folder=d,mode='temporary_queue',transport='codex_web_gpt',extraction=display_equations.POLICY)
             (root/'formula-only-control.json').write_text(json.dumps(control))
             output=root/display_equations.OUTPUT
             output.mkdir()
@@ -89,13 +89,10 @@ class AppQueueTests(unittest.TestCase):
                 db.execute("insert into batches values(1,'active')")
                 db.commit()
             with (patch.object(formula_queue,'enabled',return_value=True),
-                  patch('oled_formulas.app_queue.Path.home',return_value=root),
-                  patch('oled_formulas.formula_pilot.run') as chrome,
-                  patch('playwright.sync_api.sync_playwright') as cdp):
+                  patch('oled_formulas.app_queue.Path.home',return_value=root)):
                 formula_queue.run({'catalog_path':str(root/'catalog.sqlite3')},control)
             self.assertEqual(json.loads((output/'app-status.json').read_text())['state'],'finished')
-            chrome.assert_not_called()
-            cdp.assert_not_called()
+            self.assertEqual(json.loads((folder/'attempt.json').read_text())['state'],'submitted')
 
     def test_free_slot_refills_while_four_other_jobs_are_still_running(self):
         from threading import Event,Lock

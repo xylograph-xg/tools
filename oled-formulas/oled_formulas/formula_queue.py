@@ -1,6 +1,6 @@
 """Persistent multi-paper crop schedule for the sole formula web owner."""
 from collections import defaultdict, deque
-from contextlib import ExitStack, closing, nullcontext
+from contextlib import closing
 import hashlib
 import json
 import os
@@ -313,187 +313,38 @@ def recover_publications(db,root,output,active):
 
 
 def run(config, control):
-    from playwright.sync_api import sync_playwright
-    from . import formula_pilot
+    from .formula_only import app_route
+    if not app_route(control):
+        raise ValueError("公式队列仅支持已登记的 App 整页模式")
     root = Path(control['folder'])
-    display = control.get('extraction') == display_equations.POLICY
-    output = root/(display_equations.OUTPUT if display else 'automatic')
+    output = root/display_equations.OUTPUT
     output.mkdir(exist_ok=True)
     base = Path(config['catalog_path']).parent
     def active():
         return enabled(config) and read(base/'formula-only-control.json')==control
-    with closing(sqlite3.connect(output/'queue.sqlite3')) as db, ExitStack() as stack:
+    with closing(sqlite3.connect(output/'queue.sqlite3')) as db:
         schedule(db,root,control,config)
-        if display:
-            recover_saved_reviews(db,config,control,root,output,active)
-            recover_publications(db,root,output,active)
-            cache = {}
-            for (paper,) in db.execute('select distinct paper from outputs').fetchall():
-                if not active():return
-                result = read(output/'by-paper'/(paper+'.json'))
-                review_path = output/'training-reviews'/(paper+'.json')
-                if result.get('export_schema_version')!=3 or result.get('training_review_sha256')!=(digest(review_path) if review_path.is_file() else None):
-                    try:
-                        render_paper(db,root,output,paper,cache)
-                    except (OSError,ValueError,KeyError,zipfile.BadZipFile) as exc:
-                        write(output/'publication-errors'/(paper+'.json'),dict(paper=paper,reason=str(exc)))
-        if display and control.get('transport')=='codex_web_gpt':
-            from .app_queue import run as run_app
-            return run_app(config,control,db,output,active)
-        browser = None
-        def connection():
-            nonlocal browser
-            if browser is None or not browser.is_connected():
-                pw = stack.enter_context(sync_playwright()) if browser is None else browser_runtime[0]
-                browser_runtime[:] = [pw]
-                browser = pw.chromium.connect_over_cdp(os.environ.get('WEB_GPT_CDP_URL','http://127.0.0.1:9222'),no_defaults=True,timeout=30000)
-            return nullcontext((browser_runtime[0],browser))
-        browser_runtime = []
-        def legacy():
-            if display:
-                refresh_image_reviews(db,root,output,active)
-            recover_publications(db,root,output,active)
-            # Finish collecting already sent old material in its original archive.
-            old = root/'automatic'
-            if (old/'queue.sqlite3').exists():
-                with closing(sqlite3.connect(old/'queue.sqlite3')) as previous:
-                    for (number,) in previous.execute("select id from batches where state='active'").fetchall():
-                        prior = old/'batches'/f'{number:06d}'
-                        receipt = read(prior/'attempt.json')
-                        if receipt.get('state') not in ('send_intent','submitted','raw_saved'):
-                            continue
-                        old_control = dict(control,pilot_folder=str(prior),batch=number,pilot_zip_sha256=receipt['zip_sha256'])
-                        old_control.pop('extraction')
-                        old_control['collect_timeout'] = 8
-                        formula_pilot.run(config,old_control,registered=control,connection=connection)
-                        status = read(prior/'status.json')
-                        if (receipt.get('state')=='submitted' and status.get('state')=='blocked'
-                                and status.get('reason')=='原临时会话地址变化，保留原回执'
-                                and active() and read(prior/'attempt.json')==receipt):
-                            tid=receipt['window_target']
-                            window=read(output/'window-observation.json')
-                            view=window.get('pages',{}).get(tid,{})
-                            if (window.get('pid')==os.getpid() and view.get('inspection_complete')
-                                    and 0<=time.time()-view['checked_at']<=30 and view.get('account_ready')
-                                    and view.get('url') in ('https://chatgpt.com/','https://chatgpt.com/?temporary-chat=true')
-                                    and not any(view.get(k) for k in ('has_users','has_answer','has_draft','has_attachments',
-                                            'streaming','uploading','login','verification','quota','errors'))):
-                                write(prior/'lost-conversation.json',dict(receipt=receipt,observed=view,requeue_allowed=False))
-                                with previous:
-                                    previous.execute("update batches set state='review',reason=? where id=? and state='active'",
-                                                     (status['reason'],number))
-                        if status.get('state')=='collected':
-                            publish(previous,root,old,number,prior)
-        def process(batch, target, progress):
-            folder = output/'batches'/f'{batch:06d}'
-            collection_only = db.execute('select 1 from pending_collections where batch=?',(batch,)).fetchone()
-            if collection_only and read(folder/'attempt.json').get('state') not in ('submitted','raw_saved'):
-                progress('blocked',batch=batch,reason='原收取回执缺失或不一致')
-                return 'blocked'
-            with db:
-                db.execute("update batches set state='active' where id=?",(batch,))
-            counts = dict(db.execute('select state,count(*) from batches group by state'))
-            progress('preparing',batch=batch)
-            try:
-                builder = display_equations.build_packet if display else packet
-                sha = builder(db,config,root,folder,batch)
-            except (ValueError,KeyError,zipfile.BadZipFile) as exc:
-                with db:
-                    db.execute("update batches set state='held',reason=? where id=?",(str(exc),batch))
-                return 'continue'
-            job_control = dict(control,pilot_folder=str(folder),registered_pilot_sha256=control.get('pilot_zip_sha256'),pilot_zip_sha256=sha,batch=batch)
-            gate = read(output/'attachment-backoff.json') if display else {}
-            trial = gate.get('trial') or {}
-            if gate.get('mode')=='trial' and trial.get('batch')==batch and trial.get('target')==target:
-                job_control['attachment_trial'] = trial
-            if target:
-                job_control['dispatch_target'] = target
-            if display:
-                job_control['collect_timeout'] = 5
-            formula_pilot.run(config, job_control, registered=control, connection=connection,
-                              observer=lambda state,**fields:progress(state,batch=batch,**fields))
-            if not active():
-                return
-            status = read(folder/'status.json')
-            if status.get('state')=='collected':
-                try:
-                    publish(db,root,output,batch,folder)
-                except (OSError,ValueError,KeyError,zipfile.BadZipFile) as exc:
-                    with db:
-                        db.execute("update batches set state=case when state='publishing' then state else 'review' end,reason=? where id=?", (str(exc),batch))
-                    return 'continue'
-                with db:
-                    db.execute('delete from pending_collections where batch=?',(batch,))
-                return 'continue'
-            reason = status.get('reason','未取得完整回执')
-            attempt = read(folder/'attempt.json')
-            if display and status.get('state') in ('terminal_without_text','stopped_answer_review','empty_wait_review') and attempt.get('state')=='submitted':
-                with db:
-                    db.execute("update batches set state='review',reason=? where id=?",(reason,batch))
-                    db.execute('delete from pending_collections where batch=?',(batch,))
-                return 'continue'
-            if display and status.get('state')=='awaiting_answer' and attempt.get('state')=='submitted':
-                with db:
-                    db.execute("update batches set state='awaiting_answer',reason=? where id=?",(reason,batch))
-                    observed = status.get('observation',{})
-                    delay = 30 if observed.get('terminal_complete') and not observed.get('answer_characters') else 45
-                    db.execute('insert or replace into pending_collections values(?,?)',(batch,time.time()+delay))
-                return 'continue'
-            if display and status.get('state')=='trial_probe_unavailable' and not attempt:
-                with db:
-                    db.execute("update batches set state='queued',reason=null where id=?",(batch,))
-                return 'probe_unavailable'
-            if display and reason=='没有通过原所有者守卫的空闲页' and not attempt and (target or counts.get('awaiting_answer')):
-                with db:
-                    db.execute("update batches set state='queued' where id=?",(batch,))
-                counts = dict(db.execute('select state,count(*) from batches group by state'))
-                progress('awaiting_answer',reason=reason)
-                if not target:time.sleep(10)
-                return 'no_slot'
-            if attempt.get('state')=='raw_saved':
-                with db:
-                    db.execute("update batches set state='review',reason=? where id=?",(reason,batch))
-                return 'continue'
-            progress('blocked',batch=batch,reason=reason)
-            return 'blocked'
-
-        if display:
-            from .formula_dispatch import dispatch
-            from browser.api import browser_start_request__request as browser_start_request_request
-            from browser.api import browser_start_request__run_once as browser_start_request_run_once
-            launch = read(base/'browser-start-request.json')
-            if launch.get('target')!='formula_temp_pilot' or launch.get('state')=='failed':
-                browser_start_request_request(config,'formula_temp_pilot')
-            while active():
-                launch = browser_start_request_run_once(config)
-                if launch.get('state')=='ready':break
-                if launch.get('state')=='failed':
-                    write(output/'status.json',dict(state='blocked',time=time.time(),pid=os.getpid(),
-                        reason='专用 Chrome 启动失败：'+str(launch.get('error',''))))
-                    return
-                time.sleep(2)
+        recover_saved_reviews(db,config,control,root,output,active)
+        recover_publications(db,root,output,active)
+        cache = {}
+        for (paper,) in db.execute('select distinct paper from outputs').fetchall():
             if not active():return
-            with connection() as (pw, owned_browser):
-                return dispatch(config, control, db, output, pw, owned_browser, active, process, legacy)
+            result = read(output/'by-paper'/(paper+'.json'))
+            review_path = output/'training-reviews'/(paper+'.json')
+            if result.get('export_schema_version')!=3 or result.get('training_review_sha256')!=(digest(review_path) if review_path.is_file() else None):
+                try:
+                    render_paper(db,root,output,paper,cache)
+                except (OSError,ValueError,KeyError,zipfile.BadZipFile) as exc:
+                    write(output/'publication-errors'/(paper+'.json'),dict(paper=paper,reason=str(exc)))
+        from .app_queue import run as run_app
+        return run_app(config,control,db,output,active)
 
-        while active():
-            counts = dict(db.execute('select state,count(*) from batches group by state'))
-            def progress(state,**fields):
-                write(output/'status.json',dict(state=state,counts=counts,time=time.time(),pid=os.getpid(),**fields))
-            job = db.execute("select id from batches where state='active' order by id limit 1").fetchone()
-            probe = db.execute("""select b.id from batches b join pending_collections p on p.batch=b.id
-                                where b.state='awaiting_answer' and p.next_check<=? order by p.next_check limit 1""",
-                               (time.time(),)).fetchone()
-            if not job:
-                job = probe
-            if not job:
-                job = db.execute("select id from batches where state='queued' order by id limit 1").fetchone()
-            if not job:
-                if counts.get('awaiting_answer'):
-                    progress('awaiting_answer')
-                    time.sleep(5)
-                    continue
-                progress('finished')
-                return
-            if process(job[0],None,progress) == 'blocked':
-                return
+
+def index_paper_order(db):
+    """Keep frozen batches together and visit the earliest planned paper group first."""
+    db.execute('create temp table if not exists formula_paper_order(batch integer primary key, first_batch integer)')
+    db.execute('delete from temp.formula_paper_order')
+    db.execute("""with firsts as (select paper,min(batch) first_batch from crops group by paper)
+        insert into temp.formula_paper_order
+        select c.batch,min(f.first_batch) from crops c join firsts f using(paper) group by c.batch""")
+    db.commit()

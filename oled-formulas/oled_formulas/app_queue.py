@@ -25,7 +25,7 @@ PARALLEL = 5
 
 
 def archived_unsent(db, output, batch, control, traces):
-    from .formula_dispatch import historical_slot_receipt
+    from .legacy_receipts import historical_slot_receipt
     folder = output/'batches'/f'{batch:06d}'
     job = f'formula-display-{batch}'
     if any((folder/n).exists() for n in ('attempt.json','response.txt','records.jsonl','app-job.json')):
@@ -276,13 +276,13 @@ def collect_job(db, control, root, output, batch, receipt):
 
 
 def run(config, control, db, output, active):
-    from .formula_dispatch import index_paper_order
+    from .formula_queue import index_paper_order
     from .formula_queue import recover_publications
     root = Path(control['folder'])
     base = Path(config['catalog_path']).parent
     state_dir = Path.home()/'.local/state/codex-web-client-oled'/hashlib.sha256(str(output.resolve()).encode()).hexdigest()[:16]
     client = Client(state_dir,timeout=900)
-    from .entry_retry import EntryTraces
+    from .legacy_receipts import EntryTraces
     admit(db,output,control=control,traces=EntryTraces(base/'upload-attempt-events.jsonl'))
     index_paper_order(db)
     running = {}

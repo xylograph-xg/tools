@@ -7,7 +7,6 @@ import unittest
 from unittest.mock import patch
 import zipfile
 
-from oled_formulas.formula_pilot import confirm_empty_answer
 from oled_formulas.formula_queue import publish, recover_publications
 from oled_formulas.formula_results import check_python
 
@@ -29,27 +28,6 @@ class ReportRegressions(unittest.TestCase):
         self.assertEqual(transcription_check(r,lines)['missing_pdf_tokens'],['eff'])
         self.assertIn('Eq',transcription_check(dict(r,equation_label='3'),lines)['missing_pdf_tokens'])
 
-    def test_blank_wait_requires_contiguous_confirmations_and_resumes_only_original(self):
-        from oled_formulas.formula_pilot import prolonged_empty_answer
-        from oled_formulas.formula_dispatch import resume_visible_answers
-        from core.api import services__atomic_json as write
-        with tempfile.TemporaryDirectory() as tmp,sqlite3.connect(':memory:') as db:
-            out=Path(tmp);folder=out/'batches/000001';folder.mkdir(parents=True)
-            rec=dict(job_id='formula-display-1',at=10,window_target='slot',zip_sha256='z',
-                     url='https://chatgpt.com/c/6b086820-5c10-83ed-8c51-c06dcc993662',state='submitted')
-            page=dict(inspection_complete=True,account_ready=True,target_id='slot',url=rec['url'],
-                      user_texts=['request'],streaming=False,answer_element_count=0)
-            for ts in range(100,1900,100):
-                self.assertFalse(prolonged_empty_answer(folder,rec,dict(page,checked_at=ts)))
-            self.assertTrue(prolonged_empty_answer(folder,rec,dict(page,checked_at=1900)))
-            self.assertFalse(prolonged_empty_answer(folder,rec,dict(page,checked_at=1910,streaming=True)))
-            write(folder/'attempt.json',rec)
-            db.executescript("create table batches(id,state,reason);create table pending_collections(batch primary key,next_check);")
-            db.execute("insert into batches values(1,'review','原会话连续半小时无回答节点，等待原页出现正文')")
-            resume_visible_answers(db,out,[dict(page,target_id='other',answer_texts=['result'])])
-            self.assertEqual(db.execute('select state from batches').fetchone(),('review',))
-            resume_visible_answers(db,out,[dict(page,answer_texts=['result'])])
-            self.assertEqual(db.execute('select state from batches').fetchone(),('awaiting_answer',))
 
     def test_scientific_training_receipt_is_bound_to_saved_formula(self):
         from oled_formulas.formula_results import verified_latex
@@ -81,18 +59,6 @@ class ReportRegressions(unittest.TestCase):
                 self.assertEqual(bool(item['python_rhs']),ok)
                 if not ok:self.assertEqual(item['rejected_python_rhs'],expr)
 
-    def test_empty_terminal_requires_two_stationary_observations(self):
-        with tempfile.TemporaryDirectory() as d:
-            folder=Path(d)
-            url='https://chatgpt.com/c/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
-            rec=dict(window_target='t',url=url,job_id='formula-display-5',at=1,zip_sha256='sha')
-            page=dict(target_id='t',url=url,user_texts=['q'],inspection_complete=True,terminal_complete=True,
-                      answer_element_count=1,streaming=False,draft='\n',checked_at=100)
-            self.assertFalse(confirm_empty_answer(folder,rec,page))
-            self.assertFalse(confirm_empty_answer(folder,rec,dict(page,checked_at=140,streaming=True)))
-            self.assertFalse(confirm_empty_answer(folder,rec,dict(page,checked_at=141)))
-            self.assertTrue(confirm_empty_answer(folder,rec,dict(page,checked_at=171)))
-            self.assertFalse(confirm_empty_answer(folder,rec,dict(page,url='https://chatgpt.com/')))
 
     def test_publish_recovery_and_partial_coverage(self):
         with tempfile.TemporaryDirectory() as d, sqlite3.connect(':memory:') as db:
@@ -163,54 +129,7 @@ class ReportRegressions(unittest.TestCase):
             pdf.write_bytes(b'changed')
             with self.assertRaisesRegex(ValueError,'指纹'):publish(db,root,output,1,folder)
 
-    def test_home_recovery_requires_stable_empty_target_and_receipt(self):
-        from contextlib import nullcontext
-        from unittest.mock import MagicMock
-        from oled_formulas import formula_reload as recovery
-        from core.api import services__atomic_json as write
-        import time
-        with tempfile.TemporaryDirectory() as tmp, sqlite3.connect(':memory:') as db:
-            root=Path(tmp); path=root/'gpt-window-pool.json'; tid='slot'
-            url='https://chatgpt.com/'
-            entry=dict(state='ready',kind='formula_only',active_paper_id='formula-display-7',
-                       raw_path='/raw',raw_sha256='saved',conversation_url=url+'c/original')
-            write(path,dict(windows={tid:entry}))
-            db.execute('create table batches(id,state)')
-            page=MagicMock(url=url)
-            now=time.time()
-            base=dict(target_id=tid,url=url,inspection_complete=True,account_ready=True,account_authenticated=True,composer_available=True,
-                      page_load=dict(ready_state='complete',started_at=1))
-            seen={}
-            def sample(age,**fields):
-                check=dict(base,checked_at=now+age,**fields)
-                recovery.adopt_completed_homes({'catalog_path':str(root/'catalog')},{},db,None,None,[check],recovery.load_pool(path),root,set(),seen,lambda:True)
-            with patch('browser.api.web_page_observer__responsive_lock',return_value=nullcontext()), \
-                 patch('browser.api.web_card_pool__shared_submission_status',return_value={'allowed':True}), \
-                 patch.object(recovery,'completed_home',side_effect=lambda *args:dict(entry)), \
-                 patch.object(recovery,'require_slot'),patch.object(recovery,'enumerate_pages',return_value={'pages':{tid:page}}), \
-                 patch.object(recovery,'snapshot_page',return_value=dict(base,checked_at=now+71)):
-                sample(0);sample(29);sample(30,draft='new');sample(40);sample(69)
-                self.assertEqual(json.loads(path.read_bytes())['windows'][tid],entry)
-                sample(71)
-            blank=json.loads(path.read_bytes())['windows'][tid]
-            self.assertEqual(blank['state'],'ready_blank')
-            self.assertEqual(blank['previous_saved_response']['raw_sha256'],'saved')
-            self.assertFalse(blank['never_submitted'])
 
-    def test_terminal_evidence_stays_on_original_assistant_turn(self):
-        from unittest.mock import MagicMock
-        from oled_formulas.formula_pilot import terminal_evidence
-        with tempfile.TemporaryDirectory() as tmp:
-            folder = Path(tmp)
-            receipt = dict(window_target='slot',url='https://chatgpt.com/c/original',zip_sha256='zip',job_id='job')
-            page = MagicMock(url=receipt['url'])
-            page.evaluate.return_value = dict(assistant_count=1,turns=[dict(innerText='',textContent='',innerHTML='')])
-            snap = dict(target_id='slot',url=page.url,inspection_complete=True,streaming=False,user_texts=['original'],
-                        terminal_complete=True,checked_at=1)
-            self.assertFalse(terminal_evidence(page,folder,receipt,dict(snap,url='https://chatgpt.com/')))
-            page.evaluate.assert_not_called()
-            self.assertTrue(terminal_evidence(page,folder,receipt,snap))
-            self.assertEqual(json.loads((folder/'terminal-answer-dom.json').read_bytes())['dom']['assistant_count'],1)
 
 
     def test_disjoint_box_requires_unique_printed_equation_number(self):

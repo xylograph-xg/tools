@@ -737,42 +737,35 @@
       ],
       "source_version": "1.0.0+review.2",
       "source_files_sha256": {
-        "README.md": "8abb5dc80a20cf31283c7ff889181c26e42b3ee4145ca01b6b4f082bc0d82c22",
+        "README.md": "dff1c73fb19a7ab3b021890ae26a38a754446bb7f81b636be7551ede01247d05",
         "__init__.py": "e32755f0d241922a2fe762b0b98dfaee58c735acb5e36675259fb474b1f62aa9",
         "__main__.py": "f22cca0108b4a4d51501c889486467f8ad7529f9a8eb67fe56348fe464d8f19b",
         "api.py": "375389485c88b5ec6e522972de9fec6c74d48df1e84f75c43e9cb3a703b491b5",
-        "app_queue.py": "723929a9cb3e4d9e7cedb3e4a0c210608dc2637142938adc521b73e342ce9aee",
-        "attachment_gate.py": "76d02bd712f7a07b1dff6186903cfc5b9f30c37ff6b356d67c6d24879d5b547a",
+        "app_queue.py": "b06861cb4694f343c1f678e803464c8e69aa80709fbf68ed842bc032e64eca5e",
         "audit-review-items.json": "bb7c5ceff195fdb565b38d522220c55c4ad60d764250da4cec5f701b03410b66",
         "display_equations.py": "4885c74f395a17480272994706c4e8fc9c8f7cd563b1a46269ab2dd67801f2c3",
-        "entry_retry.py": "dc24d178bfd9e1a6acad32d0d311f3882cc42e2f3eedd5af189ecaf023abdb1a",
-        "formula_dispatch.py": "6105d23fb01195ec93922ab79dab344bba95133e65a66dbc0b26f7a208591c32",
-        "formula_only.py": "72788d0de5549a99ffc9a9893525f2c6a519376c3522a1bb5c65652d433196df",
-        "formula_pilot.py": "3f9a890768c798b8c47befff77d8c221d0a26344a2e7374a9a57a554195bcbb8",
-        "formula_queue.py": "52c05d93c5d89cd5784f54a3bd556cf97914abca359748882b09e279a2b34526",
-        "formula_reload.py": "46e766305a66c5916a6e85cc04201a60d9bfb78fcfe39dd757e213676ddecd9e",
+        "formula_only.py": "c35f9def9db9e49bb68b74a562371e2c02723cf7bb5d7943941b4ca67a2cecda",
+        "formula_pilot.py": "95255727243a1aa1e7885f24f28a6a42a005854292d142a45ca480bac9b76d46",
+        "formula_queue.py": "f13fceaf584cac5afa83ab9801c11e01d568eac8a5b2dde01a63fbadd415332d",
         "formula_results.py": "60a8a5928d3963764ffcc5628a00ab2b3aa62f7218e3d409a1934db543a95ff2",
-        "interface.json": "217d79bf1cdc35390d68c338d646aa616fa74b2fbc9507d7a167a2290fc70caa",
+        "interface.json": "8e163b56ea16b99bbf4109897c43029755989e3ea735c2b194bd0c41e7c67a96",
+        "legacy_receipts.py": "604acb8fd971a278a27d9811586e197b39a96026820c2a6381f2a58951687e6f",
         "pro_menu.py": "f710edc7315bdcc2e295386205b0d71bdfda577ed7665428777454cb20939fb4",
-        "pyproject.toml": "78ed63cf18864e6a26d6d341060fe49859c5c8034971befaba934e2a7b97ae93",
+        "pyproject.toml": "12a9c02a70967b3a535cd53c6ebec4e9820aee3c314bc9fa5ba4077a27ff96c7",
         "scope.py": "886ca1522d1be1ff118b71f25a15361ebe7b4475b8fa9a50af550223452f6bf1",
-        "slot_recovery.py": "05ff6c545e7a918de92a46724ab6f9a9497134a2fce1386907b0e30041254959",
         "tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tests/test_app_queue.py": "2d7d1eb434d58eac23f75a040fcb694f00f6e1d413954762dfbcb82701262c2f",
-        "tests/test_attachment_gate.py": "3dd55cd0a12c80bb681192b764e119d30e5ca44eb0d93c40bc6b53e879e19415",
+        "tests/test_app_queue.py": "5c5611fbf47f190fe070c36959ade34cce964ff38f7f3a4bae321aa60d8f2b9c",
         "tests/test_display_equations.py": "6270253739f70c8549aa2af7d5b3e0f152e0bf0df0ff981720a3aaf6f6a69f14",
-        "tests/test_formula_only.py": "c4779cb785ebd7e66faf4196b18642b0d2d4368eed8ca90e8a54920c9a9b85dd",
+        "tests/test_formula_only.py": "0419cf20cdbc0617977bb769104298aaddb53dfe387ff06abc1202925723e95f",
         "tests/test_pro_menu.py": "5958e1d6c36b8420791e20e5824a348d63b952cbbf3846aea37ebc6b94d17a42",
         "tests/test_project_entry.py": "fa2184eeb9da55255a69bf995992530625da14023797f6de965579a443dc71e8",
-        "tests/test_report_regressions.py": "4a532e1817de836b33d74bb45dcbad8cd6cd02fcf8a6d4bf8d87006060fe5044",
-        "tests/test_slot_recovery.py": "49580bd653d6f6eb770b5ec5c5d1ba6c1d5e8f45d9f2162b4adfb32890ac8e31",
-        "unavailable-slot-authorization.json": "f52ae8c77e76a8eae92cb38162d2285cdbcdafda4a9b0fd914a622e4c89aeff2",
-        "unavailable_slots.py": "de1481a97c8e058535061c15c12a27f431ec5a901b94921271db146cbda8ae85"
+        "tests/test_report_regressions.py": "8e6bd1c90f99015d4edfa9ec2de2138a3dedd9e654da5715d41855d3bbd30f4d",
+        "unavailable-slot-authorization.json": "f52ae8c77e76a8eae92cb38162d2285cdbcdafda4a9b0fd914a622e4c89aeff2"
       },
       "verified_at": null,
       "verification": {
         "kind": "source_review_only",
-        "scope": "迁入公式源码；核对 paper 公式所有者适配层、相对接口路径及安装包构建",
+        "scope": "App 是唯一派发路线；移除旧网页依赖并归档处理方法，仅静态核对",
         "live_generation_tested": false
       },
       "consumers": [
@@ -784,42 +777,35 @@
           "status": "source_inspected",
           "inspected_at": "2026-11-27",
           "verified_at": null,
-          "verification": "browser/formula_only.py 从公开 API 导入，离线核对入口身份"
+          "verification": "已核对 App 唯一入口、相对路径和旧回执防重条件，未运行测试"
         }
       ],
       "sync_state": "current",
       "current_source_files_sha256": {
-        "README.md": "8abb5dc80a20cf31283c7ff889181c26e42b3ee4145ca01b6b4f082bc0d82c22",
+        "README.md": "dff1c73fb19a7ab3b021890ae26a38a754446bb7f81b636be7551ede01247d05",
         "__init__.py": "e32755f0d241922a2fe762b0b98dfaee58c735acb5e36675259fb474b1f62aa9",
         "__main__.py": "f22cca0108b4a4d51501c889486467f8ad7529f9a8eb67fe56348fe464d8f19b",
         "api.py": "375389485c88b5ec6e522972de9fec6c74d48df1e84f75c43e9cb3a703b491b5",
-        "app_queue.py": "723929a9cb3e4d9e7cedb3e4a0c210608dc2637142938adc521b73e342ce9aee",
-        "attachment_gate.py": "76d02bd712f7a07b1dff6186903cfc5b9f30c37ff6b356d67c6d24879d5b547a",
+        "app_queue.py": "b06861cb4694f343c1f678e803464c8e69aa80709fbf68ed842bc032e64eca5e",
         "audit-review-items.json": "bb7c5ceff195fdb565b38d522220c55c4ad60d764250da4cec5f701b03410b66",
         "display_equations.py": "4885c74f395a17480272994706c4e8fc9c8f7cd563b1a46269ab2dd67801f2c3",
-        "entry_retry.py": "dc24d178bfd9e1a6acad32d0d311f3882cc42e2f3eedd5af189ecaf023abdb1a",
-        "formula_dispatch.py": "6105d23fb01195ec93922ab79dab344bba95133e65a66dbc0b26f7a208591c32",
-        "formula_only.py": "72788d0de5549a99ffc9a9893525f2c6a519376c3522a1bb5c65652d433196df",
-        "formula_pilot.py": "3f9a890768c798b8c47befff77d8c221d0a26344a2e7374a9a57a554195bcbb8",
-        "formula_queue.py": "52c05d93c5d89cd5784f54a3bd556cf97914abca359748882b09e279a2b34526",
-        "formula_reload.py": "46e766305a66c5916a6e85cc04201a60d9bfb78fcfe39dd757e213676ddecd9e",
+        "formula_only.py": "c35f9def9db9e49bb68b74a562371e2c02723cf7bb5d7943941b4ca67a2cecda",
+        "formula_pilot.py": "95255727243a1aa1e7885f24f28a6a42a005854292d142a45ca480bac9b76d46",
+        "formula_queue.py": "f13fceaf584cac5afa83ab9801c11e01d568eac8a5b2dde01a63fbadd415332d",
         "formula_results.py": "60a8a5928d3963764ffcc5628a00ab2b3aa62f7218e3d409a1934db543a95ff2",
-        "interface.json": "217d79bf1cdc35390d68c338d646aa616fa74b2fbc9507d7a167a2290fc70caa",
+        "interface.json": "8e163b56ea16b99bbf4109897c43029755989e3ea735c2b194bd0c41e7c67a96",
+        "legacy_receipts.py": "604acb8fd971a278a27d9811586e197b39a96026820c2a6381f2a58951687e6f",
         "pro_menu.py": "f710edc7315bdcc2e295386205b0d71bdfda577ed7665428777454cb20939fb4",
-        "pyproject.toml": "78ed63cf18864e6a26d6d341060fe49859c5c8034971befaba934e2a7b97ae93",
+        "pyproject.toml": "12a9c02a70967b3a535cd53c6ebec4e9820aee3c314bc9fa5ba4077a27ff96c7",
         "scope.py": "886ca1522d1be1ff118b71f25a15361ebe7b4475b8fa9a50af550223452f6bf1",
-        "slot_recovery.py": "05ff6c545e7a918de92a46724ab6f9a9497134a2fce1386907b0e30041254959",
         "tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tests/test_app_queue.py": "2d7d1eb434d58eac23f75a040fcb694f00f6e1d413954762dfbcb82701262c2f",
-        "tests/test_attachment_gate.py": "3dd55cd0a12c80bb681192b764e119d30e5ca44eb0d93c40bc6b53e879e19415",
+        "tests/test_app_queue.py": "5c5611fbf47f190fe070c36959ade34cce964ff38f7f3a4bae321aa60d8f2b9c",
         "tests/test_display_equations.py": "6270253739f70c8549aa2af7d5b3e0f152e0bf0df0ff981720a3aaf6f6a69f14",
-        "tests/test_formula_only.py": "c4779cb785ebd7e66faf4196b18642b0d2d4368eed8ca90e8a54920c9a9b85dd",
+        "tests/test_formula_only.py": "0419cf20cdbc0617977bb769104298aaddb53dfe387ff06abc1202925723e95f",
         "tests/test_pro_menu.py": "5958e1d6c36b8420791e20e5824a348d63b952cbbf3846aea37ebc6b94d17a42",
         "tests/test_project_entry.py": "fa2184eeb9da55255a69bf995992530625da14023797f6de965579a443dc71e8",
-        "tests/test_report_regressions.py": "4a532e1817de836b33d74bb45dcbad8cd6cd02fcf8a6d4bf8d87006060fe5044",
-        "tests/test_slot_recovery.py": "49580bd653d6f6eb770b5ec5c5d1ba6c1d5e8f45d9f2162b4adfb32890ac8e31",
-        "unavailable-slot-authorization.json": "f52ae8c77e76a8eae92cb38162d2285cdbcdafda4a9b0fd914a622e4c89aeff2",
-        "unavailable_slots.py": "de1481a97c8e058535061c15c12a27f431ec5a901b94921271db146cbda8ae85"
+        "tests/test_report_regressions.py": "8e6bd1c90f99015d4edfa9ec2de2138a3dedd9e654da5715d41855d3bbd30f4d",
+        "unavailable-slot-authorization.json": "f52ae8c77e76a8eae92cb38162d2285cdbcdafda4a9b0fd914a622e4c89aeff2"
       },
       "owner_project": {
         "name": "paper",
@@ -828,14 +814,30 @@
         "rules_file": "AGENTS.md"
       },
       "source_review": {
-        "at": "2026-11-27T12:52:45.560550+00:00",
-        "note": "迁入公式源码；核对 paper 公式所有者适配层、相对接口路径及安装包构建",
+        "at": "2026-11-27T13:07:01.883479+00:00",
+        "note": "App 是唯一派发路线；移除旧网页依赖并归档处理方法，仅静态核对",
         "kind": "source_review_only"
       },
       "verification_history": [
         {
           "verified_at": null,
           "verification": null
+        },
+        {
+          "verified_at": null,
+          "verification": {
+            "kind": "source_review_only",
+            "scope": "迁入公式源码；核对 paper 公式所有者适配层、相对接口路径及安装包构建",
+            "live_generation_tested": false
+          }
+        },
+        {
+          "verified_at": null,
+          "verification": {
+            "kind": "source_review_only",
+            "scope": "已归档 Chrome 处置规则并移除旧执行分支，保留 App 和历史回执准入读取；按用户要求未运行测试",
+            "live_generation_tested": false
+          }
         }
       ]
     }
