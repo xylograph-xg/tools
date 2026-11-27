@@ -1,3 +1,7 @@
+## 2026-11-27 可迁移路径与公开源码发布
+
+工具清单与项目索引按所在目录解析路径，生成相对链接，兼容已有绝对路径。按五个已提交项目导出公开源码，独立校验公开版索引。见[发布流程](docs/公开源码发布.md)。
+
 ## 2026-11-27 已删除项目的登记清理
 
 从 projects.json 移除 chatgpt_playwright、lifelog、oled 和 question 的项目入口（规则与依赖清单）。从 codex_desktop_chat 使用方移除 chatgpt_playwright；从 paper 的模块依赖移除该项目提供的 core、qwen、settings、submission、capacity。原项目路径均已删除。历史联动状态中的 chatgpt_playwright 与 oled 相互引用已撤下；旧状态和关系两端可在清理前的 tools 提交 7054d91、paper 提交 3abb8ea 查证。paper 旧代码的 web_gpt 导入在其外部依赖中标记为缺失。
@@ -54,7 +58,7 @@
 
 ## 2026-10-06：迁移后 tools 与 all 路径复核
 
-- 确认中央根目录为 /Users/xiaoyanhao/project/tools；3 个权威工具、7 个登记项目及使用方路径存在，article/crawler/read 位于 paper 下。
+- 确认中央根目录为 ../tools；3 个权威工具、7 个登记项目及使用方路径存在，article/crawler/read 位于 paper 下。
 - 修正 web_gpt 工具卡和双向联动状态中残留的 project/article 链接，补全七项目入口与 README 当前同步范围。
 - 运行全局 update、check 与 check_links.py；同步所有已登记项目的 all 公共文件与规则块。历史审核、备份及业务数据中的来源路径保留；未进行浏览器发送或联网业务验收。
 
@@ -68,7 +72,7 @@
 
 ## 2026-09-18：登记 literature_explorer 文献发现闭环工具
 
-- 新增第三个登记工具 `literature_explorer`（source-reference）：输入研究主题，跨 OpenAlex / Semantic Scholar 搜索、去重、相关性排序产出候选论文池；人工标记 interesting 后自动引文扩展。纯标准库零依赖，权威源码 `/Users/xiaoyanhao/Desktop/crawler/literature_explorer`。
+- 新增第三个登记工具 `literature_explorer`（source-reference）：输入研究主题，跨 OpenAlex / Semantic Scholar 搜索、去重、相关性排序产出候选论文池；人工标记 interesting 后自动引文扩展。纯标准库零依赖，权威源码 `~/Desktop/crawler/literature_explorer`。
 - crawler 项目完成 all 接入（tool-dependencies.json 声明 exports=[literature_explorer]、AGENTS.md 受管理块、projects.json 登记）。
 - 新增工具卡 tools/literature_explorer/README.md、registry.json 条目（25 个源文件指纹）与 README 工具索引行。
 - 验证：源码目录 12 项 unittest 通过（Python 3.13.3）；真实 OpenAlex+S2 搜索验收一次（无 key、词袋降级打分，入库 130+ 篇）。交互式 review 会话与真实 embedding provider 未验证。
@@ -110,7 +114,7 @@
 
 实际验证：
 
-- 在 `/Users/xiaoyanhao/Desktop/oled` 执行 `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest knowledge_tree_tool.test_tool -v`，Python 3.13.3，12 项全部通过。覆盖算法、异地 CLI、本机 HTTP、数据指纹和当前正式知识库。
+- 在 `~/Desktop/oled` 执行 `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest knowledge_tree_tool.test_tool -v`，Python 3.13.3，12 项全部通过。覆盖算法、异地 CLI、本机 HTTP、数据指纹和当前正式知识库。
 - `web_gpt` 仅静态核对函数签名、配置与等待/浏览器逻辑；未启动浏览器、发送消息或上传附件，因此尚未确认真实页面兼容性。
 - 从知识树调用说明提取完整 Python 示例，在临时目录运行成功，返回 `status=ok`、32 个节点；此数量仅为当前数据下的验证结果。
 - 检查两个 JSON 文件可解析、14 个本地文档链接有效、5 个 Python 示例片段语法正确、12 个源文件摘要与登记一致，两个包的导入根均存在。
@@ -125,7 +129,7 @@
 
 ## 2026-10-04 项目目录迁移
 
-所有桌面项目和资料移至 `/Users/xiaoyanhao/project`；同步固定导入路径、工具登记、项目依赖、公共规则和现行说明。知识树 CLI 读取验证成功，浏览器生成未验收。
+所有桌面项目和资料移至 `~/project`；同步固定导入路径、工具登记、项目依赖、公共规则和现行说明。知识树 CLI 读取验证成功，浏览器生成未验收。
 
 ## 2026-10-05 paper 统一编排层
 
@@ -133,7 +137,7 @@ article、crawler、read 当前目录迁至 project/paper 下，登记路径与 
 
 ## 2026-10-05 paper PDF 多来源后备获取
 
-paper 接入固定提交 fetchpdf 的独立公开 HTTP 获取器；项目内保存上游 MIT 源码、依赖锁和外部依赖记录。未修改已登记公共工具接口，registry 与工具卡无需重新定义。9 篇待办真实重试未新增 PDF；公开对照 PDF 通过 Crossref 获取并校验。Unpaywall 无邮箱尚未启用，学生 Cookie、浏览器和外部 LLM 获取关闭。根目录 23 项测试通过；详细证据见 /Users/xiaoyanhao/project/paper/docs/重构验收记录.md。
+paper 接入固定提交 fetchpdf 的独立公开 HTTP 获取器；项目内保存上游 MIT 源码、依赖锁和外部依赖记录。未修改已登记公共工具接口，registry 与工具卡无需重新定义。9 篇待办真实重试未新增 PDF；公开对照 PDF 通过 Crossref 获取并校验。Unpaywall 无邮箱尚未启用，学生 Cookie、浏览器和外部 LLM 获取关闭。根目录 23 项测试通过；详细证据见 ../paper/docs/重构验收记录.md。
 
 ## 2026-10-05 paper durable-v2 后台修复
 
@@ -478,7 +482,7 @@ paper新增原所有者首页复用公开接口；补页按本槽/全局身份�
 ## 2026-10-20 paper 文献组织首版接口
 
 - paper登记根infrastructure新增literature业务组件与core只读元信息投影的模块关系；workbench通过literature.api调用，源目录未复制到tools，也未新增通用登记工具。
-- 两端合同、组件接口与依赖见 `/Users/xiaoyanhao/project/paper/literature/README.md`、`interface.json`、`infrastructure/core/interface.json`、`workbench/interface.json` 和 `infrastructure/tool-dependencies.json`。
+- 两端合同、组件接口与依赖见 `../paper/literature/README.md`、`interface.json`、`infrastructure/core/interface.json`、`workbench/interface.json` 和 `infrastructure/tool-dependencies.json`。
 - 临时SQLite/localhost及独立headless浏览器检查通过；模型、生产Chrome、自动标注和原常驻任务均未调用。全项目回归的修正模块既有失败单独记于paper报告，不冒称全量通过。
 
 ### 2026-10-20 paper 自动标签复用设计补充
@@ -693,3 +697,11 @@ paper/literature directions-rules-1.4.33/0.5.27：跨页重复页眉与正文科
 - 2026-11-27：使用方核对 paper → codex_desktop_chat。核对 formula_pilot、formula_only 的打包入口及 collective_page_restart 的 verify_bundle 调用；旧 ZIP 仍按原路径校验。未进行桌面外发。（命令未执行业务验收。）
 
 - 2026-11-27：使用方核对 paper → codex_web_client。核对 oled_formulas/app_queue.py 按批传入 key、before_send、parallel_slot 和 allow_pro，6 项 App 队列隔离回归通过；未派发真实网页任务。（命令未执行业务验收。）
+
+- 2026-11-27：源码审查 codex_desktop_chat。核对本轮相对路径文档及既有调用签名。桌面工具 50 项、Web 客户端 19 项离线回归通过。（命令未执行业务验收。）
+
+- 2026-11-27：源码审查 codex_web_client。核对本轮相对路径文档及既有调用签名。桌面工具 50 项、Web 客户端 19 项离线回归通过。（命令未执行业务验收。）
+
+- 2026-11-27：使用方核对 paper → codex_desktop_chat。核对本轮相对路径文档及既有调用签名。桌面工具 50 项、Web 客户端 19 项离线回归通过。（命令未执行业务验收。）
+
+- 2026-11-27：使用方核对 paper → codex_web_client。核对本轮相对路径文档及既有调用签名。桌面工具 50 项、Web 客户端 19 项离线回归通过。（命令未执行业务验收。）

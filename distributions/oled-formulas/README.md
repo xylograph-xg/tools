@@ -17,7 +17,7 @@
 shasum -a 256 -c SHA256SUMS
 python3.13 -m venv ~/venvs/oled-formulas
 ~/venvs/oled-formulas/bin/python -m pip install ./wheels/*.whl
-export PAPER_WORKSPACE_ROOT=/Users/xiaoyanhao/project/paper
+export PAPER_WORKSPACE_ROOT=../../../paper
 ~/venvs/oled-formulas/bin/python -m pip check
 ~/venvs/oled-formulas/bin/python -m oled_formulas --help
 ```

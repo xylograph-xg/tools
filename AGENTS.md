@@ -11,3 +11,5 @@
 - 双向入口见 projects.json 与各项目 tool-dependencies.json；工具维护方见 owner_project、使用方见 consumers，旧模块关系另见 module_dependencies。
 - 接口更新同一任务维护两端规则/登记；结束前运行 python3 scripts/check_links.py。区分源码静态核对与真实接入验收，检查通过不代表业务接口已经实测。
 - 新项目统一复制 all/ 并运行 all/setup.py；修改接口或公共规则后必须运行 python3 scripts/sync_tools.py update，再执行上述只读检查。源码漂移先核对实现/说明/使用方，再按 all/RULES.md 执行 accept/acknowledge；禁止为消除告警盲目刷新基线。
+
+公开合并仓库的首次发布和后续更新按[公开源码发布流程](docs/公开源码发布.md)执行。

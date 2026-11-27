@@ -12,9 +12,9 @@
 
 | 工具 ID | 能力 | 调用方式 | 源码位置 | 接入说明 |
 | --- | --- | --- | --- | --- |
-| `literature_explorer` | 按研究主题跨 OpenAlex / Semantic Scholar 发现文献、去重排序、人工筛选后引文扩展 | Python、CLI | `/Users/xiaoyanhao/project/paper/fetch/crawler/literature_explorer` | [调用说明](tools/literature_explorer/README.md) |
-| `codex_desktop_chat` | 原生 Codex App Chat 文本提问，多窗口生成并行、完整收取 | Python、JSON CLI | `/Users/xiaoyanhao/project/paper/codex_desktop_chat` | [调用说明](tools/codex_desktop_chat/README.md) |
-| `codex_web_client` | Codex Web GPT 持久队列、MCP 执行与结果验收 | Python、CLI | `/Users/xiaoyanhao/project/paper/codex_web_client` | [调用说明](tools/codex_web_client/README.md) |
+| `literature_explorer` | 按研究主题跨 OpenAlex / Semantic Scholar 发现文献、去重排序、人工筛选后引文扩展 | Python、CLI | `../paper/fetch/crawler/literature_explorer` | [调用说明](tools/literature_explorer/README.md) |
+| `codex_desktop_chat` | 原生 Codex App Chat 文本提问，多窗口生成并行、完整收取 | Python、JSON CLI | `../paper/codex_desktop_chat` | [调用说明](tools/codex_desktop_chat/README.md) |
+| `codex_web_client` | Codex Web GPT 持久队列、MCP 执行与结果验收 | Python、CLI | `../paper/codex_web_client` | [调用说明](tools/codex_web_client/README.md) |
 
 ## 后续项目怎么用
 
@@ -41,16 +41,16 @@ python3 all/setup.py
 Mac 可直接运行或双击根目录 [全局更新.command](全局更新.command)，默认检查并同步所有已登记项目。从任意工作目录运行：
 
 ```bash
-/Users/xiaoyanhao/project/tools/全局更新.command
+../tools/全局更新.command
 ```
 
 只检查是否有变化、不写文件：
 
 ```bash
-/Users/xiaoyanhao/project/tools/全局更新.command check
+../tools/全局更新.command check
 ```
 
-等价的跨平台 Python 入口是 `python3 /Users/xiaoyanhao/project/tools/scripts/sync_tools.py update` 或 `check`；Windows 另提供 [全局更新.cmd](全局更新.cmd)，需安装 Python 并调整本机项目路径（本次未在 Windows 验证）。
+等价的跨平台 Python 入口是 `python3 ../tools/scripts/sync_tools.py update` 或 `check`；Windows 另提供 [全局更新.cmd](全局更新.cmd)，需安装 Python 并调整本机项目路径（本次未在 Windows 验证）。
 
 自动更新范围：各项目 all 公共规则、AGENTS 受管理块、依赖中的当前源码指纹、工具反向登记、三份接口结构快照和 [全局更新报告](updates/latest.md)。新项目会纳入同一流程。源码、工具卡中的业务解释和适配代码仍需开发者审查修改。
 
@@ -59,7 +59,7 @@ Mac 可直接运行或双击根目录 [全局更新.command](全局更新.comman
 结束前还需运行原有只读检查：
 
 ```bash
-python3 /Users/xiaoyanhao/project/tools/scripts/check_links.py
+python3 ../tools/scripts/check_links.py
 ```
 
 该只读命令检查源码漂移、漏登记文件、双向关系和路径；全局 check 还检查公共规则与派生文件是否需要同步。命令退出码：0 无待办，1 需更新/审查，2 配置/冲突/权限错误。

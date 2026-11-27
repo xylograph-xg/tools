@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import json
 import re
+from urllib.parse import unquote
 from pathlib import Path
 
 
@@ -34,14 +35,14 @@ def check(root: Path) -> tuple[list[str], list[str], dict]:
     registered_root = (root / 'registry.json').resolve()
     source_count = module_count = 0
     for name, project in projects.items():
-        folder = Path(project['root'])
+        folder = (root / project['root'])
         rules = folder / project['rules_file']
         manifest_path = folder / project['manifest_file']
         expect(rules.is_file(), f'{name} 缺少规则文件：{rules}')
         if rules.is_file():
             text = rules.read_text(encoding='utf-8')
-            linked_paths = re.findall(r'/[^\s()<>`]+registry\.json', text)
-            expect(any(Path(path).resolve() == registered_root for path in linked_paths) and 'check_links.py' in text,
+            linked_paths = re.findall(r'(?:\(([^()\n]*registry\.json)\)|^([^\s()]+registry\.json)$)', text, re.M)
+            expect(any((folder / unquote(link or plain)).resolve() == registered_root for link, plain in linked_paths) and 'check_links.py' in text,
                    f'{name} 规则缺少 tools 清单链接或联动检查命令')
         if not manifest_path.is_file():
             errors.append(f'{name} 缺少关系表：{manifest_path}')
@@ -49,17 +50,17 @@ def check(root: Path) -> tuple[list[str], list[str], dict]:
         manifest = read(manifest_path)
         manifests[name] = manifest
         expect(manifest['project_name'] == name, f'{name} 项目名称不一致')
-        expect(Path(manifest['project_root']).resolve() == folder.resolve(), f'{name} 项目根路径不一致')
-        expect(Path(manifest['registry_path']).resolve() == registered_root, f'{name} 未反向指向当前 registry.json')
-        expect(Path(manifest['projects_index_path']).resolve() == (root / 'projects.json').resolve(), f'{name} 项目索引路径不一致')
-        expect(Path(manifest['rules_path']).is_file(), f'{name} 中央联动规范路径失效')
+        expect((folder / manifest['project_root']).resolve() == folder.resolve(), f'{name} 项目根路径不一致')
+        expect((folder / manifest['registry_path']).resolve() == registered_root, f'{name} 未反向指向当前 registry.json')
+        expect((folder / manifest['projects_index_path']).resolve() == (root / 'projects.json').resolve(), f'{name} 项目索引路径不一致')
+        expect((folder / manifest['rules_path']).is_file(), f'{name} 中央联动规范路径失效')
 
     for tool_id, tool in tools.items():
-        source = Path(tool['source_dir'])
+        source = (root / tool['source_dir'])
         guide = root / tool['guide']
         expect(guide.is_file(), f'{tool_id} 调用说明失效：{guide}')
         for doc in tool['source_docs']:
-            expect(Path(doc).is_file(), f'{tool_id} 原说明路径失效：{doc}')
+            expect((root / doc).is_file(), f'{tool_id} 原说明路径失效：{doc}')
         hashes = tool['source_files_sha256']
         expect(bool(hashes), f'{tool_id} 没有源码基线')
         for relative, expected in hashes.items():
@@ -106,22 +107,22 @@ def check(root: Path) -> tuple[list[str], list[str], dict]:
                     expect(consumer.get(field) == dependency.get(field), f'{tool_id}/{name} 双向 {field} 不一致')
 
     for name, manifest in manifests.items():
-        folder = Path(projects[name]['root'])
+        folder = (root / projects[name]['root'])
         exports = unique(manifest['exports'], 'id', f'{name} 导出')
         for tool_id, entry in exports.items():
             expect(tool_id in tools, f'{name} 导出尚未登记：{tool_id}')
             if tool_id in tools:
                 tool = tools[tool_id]
                 expect(tool.get('owner_project', {}).get('name') == name, f'{name}/{tool_id} 维护方反向关系不一致')
-                expect(entry['source_dir'] == tool['source_dir'], f'{name}/{tool_id} 导出源码路径不一致')
-                expect(Path(entry['guide_path']).resolve() == (root / tool['guide']).resolve(), f'{name}/{tool_id} 工具卡路径不一致')
+                expect((folder / entry['source_dir']).resolve() == (root / tool['source_dir']).resolve(), f'{name}/{tool_id} 导出源码路径不一致')
+                expect((folder / entry['guide_path']).resolve() == (root / tool['guide']).resolve(), f'{name}/{tool_id} 工具卡路径不一致')
         dependencies = unique(manifest['tools'], 'id', f'{name} 依赖')
         for tool_id, entry in dependencies.items():
             expect(tool_id in tools, f'{name} 依赖未知工具：{tool_id}')
             if tool_id not in tools:
                 continue
             tool = tools[tool_id]
-            expect(entry['source_dir'] == tool['source_dir'], f'{name}/{tool_id} 依赖源码路径不一致')
+            expect((folder / entry['source_dir']).resolve() == (root / tool['source_dir']).resolve(), f'{name}/{tool_id} 依赖源码路径不一致')
             expect(any(c['project_name'] == name for c in tool['consumers']), f'{name}/{tool_id} 缺少 consumers 反向登记')
             status = entry.get('status')
             expect(status in {'source_inspected', 'verified'}, f'{name}/{tool_id} 核对状态无效')
@@ -141,7 +142,7 @@ def check(root: Path) -> tuple[list[str], list[str], dict]:
             expect(provider in projects, f'{name} 模块提供方未知：{provider}')
             if provider in projects:
                 for relative in dependency['source_files']:
-                    expect((Path(projects[provider]['root']) / relative).is_file(), f'{name} → {provider} 模块路径失效：{relative}')
+                    expect(((root / projects[provider]['root']) / relative).is_file(), f'{name} → {provider} 模块路径失效：{relative}')
             for relative in dependency['used_by']:
                 expect((folder / relative).is_file(), f'{name} 模块调用入口失效：{relative}')
     return errors, notes, {'projects': len(projects), 'tools': len(tools), 'source_files': source_count, 'module_links': module_count}

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "template_note": "复制到项目根目录并替换项目名/路径，删除未使用的工具。登记到 projects.json 并与 owner_project/consumers 对应；静态核对填 observed_source_files_sha256/inspected_at，实际验收后才填 verified_source_files_sha256/verified_at。不要将模板占位值直接登记。",
   "project_name": "<your_project_name>",
-  "registry_path": "/Users/xiaoyanhao/project/tools/registry.json",
+  "registry_path": "../tools/registry.json",
   "tools": [
     {
       "id": "<registry_tool_id>",
@@ -10,7 +10,7 @@
       "used_interfaces": [
         "<public_interface>"
       ],
-      "source_dir": "/absolute/path/to/tool",
+      "source_dir": "../source-project/tool",
       "environment": {},
       "source_version": null,
       "verified_source_files_sha256": {},
@@ -21,9 +21,9 @@
       "observed_source_files_sha256": {}
     }
   ],
-  "project_root": "/absolute/path/to/your_project",
-  "projects_index_path": "/Users/xiaoyanhao/project/tools/projects.json",
-  "rules_path": "/Users/xiaoyanhao/project/tools/docs/跨项目接入与联动.md",
+  "project_root": ".",
+  "projects_index_path": "../tools/projects.json",
+  "rules_path": "../tools/docs/跨项目接入与联动.md",
   "exports": [],
   "module_dependencies": []
 }

@@ -517,7 +517,7 @@
         "tests/test_codex_desktop_attachments.py": "3cace24e20399dae866c641b6ef05d58e91cb2cbdcc6356ae17fac11ee0da773",
         "tests/test_codex_desktop_bundles.py": "da614705c145f8335c86757e113f27b3cddc43f7bc72cca5f1c9a8e8620378e8",
         "tests/test_codex_desktop_chat.py": "0fbaccc58d0d13bfa67ba047e1bad6c73efce05905e4abfdf3e9e758a7c1a0d9",
-        "调用说明.md": "af7967dad7c92d42f2cfe7af3da988296187888f23c8f36be524fdccb00327fc"
+        "调用说明.md": "ed03c215d4ff602ac0b2c7b683f45ebb815319adc293b2db9ee8fb8c0ecc7596"
       },
       "changes": [],
       "declarations": [
@@ -1070,7 +1070,7 @@
     },
     "codex_web_client": {
       "files_sha256": {
-        "README.md": "e8095fb9c33ba26e23d7ba9bb06ad6be5d7758fbac3ff8b9f881e648c6d48496",
+        "README.md": "e9f17aec333059288c5329ed4859f9adc39095b1fcc789aea03150c544b38df2",
         "__init__.py": "e6a2cd2a4b36d0a21213b66d110e3fd37562efa8d5b36f41ac85db52d982c7a4",
         "__main__.py": "97194f8f36876c9aeb75cc510efe37232f308d92c8f82160e37d7ae11072d3a4",
         "api.py": "19b72e8096437ba9e0d8161f9b515ec2193a4f6bb8e25d7b835bc8376650eb06",
@@ -1257,7 +1257,7 @@
         "app/analyzer.py": "150600aea4586293aeea42def504b411f4bbac1045ae2b1d834d96a81c839eb4",
         "app/parser.py": "c0013ef23201787f005c1dacc85d5765b50af379cebf4ab99e33d7de3bf59d79",
         "app/exporter.py": "b831340d7f0b2ea14c0937b32537b0cdc01b7599c159a47f5d56f7bf70c5f3e3",
-        "scripts/ollama_env.sh": "b83fddd494df913b346e8a50d1ce9d36a9d848e33a49b292459877bfac806a41",
+        "scripts/ollama_env.sh": "20b2fb584c5517af14cdedaa60d40334da91475fd5c63f2f817fbcaa0b14db37",
         "app/prompts/figure.md": "2dd3df5d7d4cb744ab37972007d8618f3b4136055e7dfbfe21867bce1f291042",
         "app/prompts/equation.md": "e692179918dd4df72cafc8ef82e050f1e17b6c19efc356ded105731265d1d689",
         "app/evidence_identity.py": "3d3967e666d07f8d8c373ffab00ec714555090a7d77e7bda6b9310b2e46d6b2a",
@@ -1276,7 +1276,7 @@
         "app/prompts/conclusion.md": "fca768d3d2eadb501d84c0e546ba41867e4a843cd8260f752ba24a2faaea76fe",
         "app/prompts/key_findings.md": "d89fb813f4935c5a9c4b9247f132d34dd6ab97b519d2ab55aced7c66513e629d",
         "app/prompts/paper_info.md": "e9846401c638c75417e252a220c7dce1ce1d9d13cab58c74f6cc5df6b5d743d1",
-        "app/pdf_geometry.py": "823b1b5b18c0d294e131a52a45d16fd328fc02cf7d433a0913292869971c0dde"
+        "app/pdf_geometry.py": "8946c27efc533a3dda56e0cf206340e1da7589444ddae8723181ef8f0761b17b"
       }
     },
     {
@@ -1285,7 +1285,7 @@
       "files_sha256": {
         "api.py": "f775e1c2931f73bededb1099e2ee3c0a0374f0c7ebf8fa5f96ee8df252fcf5ce",
         "interface.json": "12c45367d1500ba4f9f154c9b1d36ad8f959bd937083aed82bc5cc891c061122",
-        "src/web_gpt_adapter.py": "27f033e97b28bca699f29aa9468182269dd43310b528759edec46029c1f0cc60"
+        "src/web_gpt_adapter.py": "70742545cd03328f17cd51f77bab906059e20ae345df08d0046eda53efb53c33"
       }
     },
     {

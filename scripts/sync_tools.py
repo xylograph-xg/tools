@@ -14,6 +14,7 @@ import re
 import sys
 import tempfile
 import uuid
+from urllib.parse import quote
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import check_links
@@ -23,7 +24,7 @@ END = '<!-- tools-all:end -->'
 PACK = ('README.md', 'RULES.md', 'setup.py', 'hub.json')
 SUFFIXES = {'.py', '.js', '.ts', '.json', '.md', '.toml'}
 EXCLUDED = {'__pycache__', 'node_modules', 'venv', 'dist', 'build'}
-DEFAULT_ROOT = '/Users/xiaoyanhao/project/tools'
+
 
 
 def encoded(value):
@@ -112,8 +113,8 @@ def locked(root):
         path.unlink(missing_ok=True)
 
 
-def snapshot(tool):
-    folder = Path(tool['source_dir'])
+def snapshot(tool, root=None):
+    folder = ((root or Path(__file__).resolve().parents[1]) / tool['source_dir']).resolve()
     if not folder.is_dir():
         raise ValueError(f'源码目录不存在：{folder}')
     hashes, declarations = {}, []
@@ -169,13 +170,14 @@ def describe(path, node, name):
     return {'file': str(path), 'line': node.lineno, 'signature': name + '(' + ', '.join(parameters) + ')'}
 
 
-def generated(tool, current):
+def generated(tool, current, root):
+    source = os.path.relpath(root / tool['source_dir'], (root / tool['guide']).parent)
     lines = [f"# {tool['id']}：自动接口快照", '',
              '由全局更新生成；仅记录当前源码结构，不承诺业务语义或运行验收。默认参数值以源码/人工工具卡为准。列出的文件级函数也可能是内部实现，不自动成为公共 API。', '',
              f"权威目录：`{tool['source_dir']}`", '', '## 相对已审查基线的变化', '']
     lines += [f"- {x['kind']}: `{x['path']}`" for x in current['changes']] or ['无源码变化。']
     lines += ['', '## Python 声明', '']
-    lines += [f"- `{d['signature']}` — [{d['file']}:{d['line']}]({Path(tool['source_dir']) / d['file']}:{d['line']})" for d in current['declarations']]
+    lines += [f"- `{d['signature']}` — [{d['file']}:{d['line']}]({quote((Path(source) / d['file']).as_posix())}#L{d['line']})" for d in current['declarations']]
     lines += ['', '## 文件 SHA-256', '', '```json', json.dumps(current['files_sha256'], ensure_ascii=False, indent=2), '```', '']
     return '\n'.join(lines)
 
@@ -199,8 +201,9 @@ def package(plan, root, folder, rules_file):
     hashes = {}
     for name in PACK:
         original = (root / 'all' / name).read_bytes()
-        data = (encoded({'tools_root': str(root)}) if name == 'hub.json' else
-                original.decode().replace(DEFAULT_ROOT, str(root)).encode())
+        data = encoded({'tools_root': os.path.relpath(root, destination)}) if name == 'hub.json' else original
+        if name in {'README.md', 'RULES.md'}:
+            data = original.decode().replace('../scripts/', os.path.relpath(root / 'scripts', destination) + '/').encode()
         path = destination / name
         if path.is_symlink():
             raise ValueError(f'all 受管理文件不能是符号链接：{path}')
@@ -215,9 +218,9 @@ def package(plan, root, folder, rules_file):
     if BEGIN in text or END in text:
         if text.count(BEGIN) != 1 or text.count(END) != 1 or text.index(END) < text.index(BEGIN):
             raise ValueError(f'AGENTS 受管理标记损坏：{path}')
-        text = re.sub(re.escape(BEGIN) + r'.*?' + re.escape(END), lambda _: block(root), text, flags=re.S)
+        text = re.sub(re.escape(BEGIN) + r'.*?' + re.escape(END), lambda _: block(os.path.relpath(root, folder)), text, flags=re.S)
     else:
-        text = text.rstrip() + '\n\n' + block(root) + '\n'
+        text = text.rstrip() + '\n\n' + block(os.path.relpath(root, folder)) + '\n'
     plan.put(path, text)
 
 
@@ -226,7 +229,7 @@ def load(root):
     names = [p['name'] for p in index['projects']]
     if len(names) != len(set(names)):
         raise ValueError('projects.json 存在重名项目')
-    manifests = {p['name']: read_json(Path(p['root']) / p['manifest_file']) for p in index['projects']}
+    manifests = {p['name']: read_json((root / p['root']) / p['manifest_file']) for p in index['projects']}
     return registry, index, manifests
 
 
@@ -235,20 +238,20 @@ def install(root, folder):
     if folder == root or not folder.is_dir():
         raise ValueError('请选择存在的业务项目目录，不能是 tools 自身')
     registry, index, manifests = load(root)
-    found = next((p for p in index['projects'] if Path(p['root']).resolve() == folder), None)
+    found = next((p for p in index['projects'] if (root / p['root']).resolve() == folder), None)
     name = found['name'] if found else folder.name
     if not found and any(p['name'] == name for p in index['projects']):
         raise ValueError(f'已有同名项目 {name}，请先为新目录使用唯一名称')
     plan = Plan()
     if not found:
-        found = {'name': name, 'root': str(folder), 'rules_file': 'AGENTS.md', 'manifest_file': 'tool-dependencies.json'}
+        found = {'name': name, 'root': os.path.relpath(folder, root), 'rules_file': 'AGENTS.md', 'manifest_file': 'tool-dependencies.json'}
         index['projects'].append(found)
         path = folder / found['manifest_file']
         manifest = read_json(path) if path.exists() else {
-            'schema_version': 1, 'project_name': name, 'project_root': str(folder),
-            'registry_path': str(root / 'registry.json'), 'projects_index_path': str(root / 'projects.json'),
-            'rules_path': str(root / 'docs/跨项目接入与联动.md'), 'exports': [], 'tools': [], 'module_dependencies': []}
-        if manifest['project_name'] != name or Path(manifest['project_root']).resolve() != folder:
+            'schema_version': 1, 'project_name': name, 'project_root': '.',
+            'registry_path': os.path.relpath(root / 'registry.json', folder), 'projects_index_path': os.path.relpath(root / 'projects.json', folder),
+            'rules_path': os.path.relpath(root / 'docs/跨项目接入与联动.md', folder), 'exports': [], 'tools': [], 'module_dependencies': []}
+        if manifest['project_name'] != name or (folder / manifest['project_root']).resolve() != folder:
             raise ValueError('现有依赖记录属于其他项目，请先合并')
         plan.put(path, encoded(manifest))
         plan.put(root / 'projects.json', encoded(index))
@@ -264,12 +267,13 @@ def reconcile(root, registry, index, manifests):
     tools = {t['id']: t for t in registry['tools']}
     exports = {}
     for name, manifest in manifests.items():
-        if manifest['project_name'] != name or Path(manifest['project_root']).resolve() != Path(projects[name]['root']).resolve():
+        folder = root / projects[name]['root']
+        if manifest['project_name'] != name or (folder / manifest['project_root']).resolve() != (root / projects[name]['root']).resolve():
             raise ValueError(f'{name} 关系表身份不一致')
         for entry in manifest['exports']:
             if entry['id'] not in tools or entry['id'] in exports:
                 raise ValueError(f'导出工具未知或维护方冲突：{entry["id"]}')
-            if entry['source_dir'] != tools[entry['id']]['source_dir']:
+            if (folder / entry['source_dir']).resolve() != (root / tools[entry['id']]['source_dir']).resolve():
                 raise ValueError('源码路径迁移需先同时修改清单和项目记录')
             exports[entry['id']] = name
         ids = [e['id'] for e in manifest['tools']]
@@ -303,7 +307,7 @@ def update_plan(root, accept_tool=None, acknowledge=None, note=None):
     if (accept_tool or acknowledge) and (not note or not note.strip()):
         raise ValueError('审查登记必须填写具体 --note')
     for tool in registry['tools']:
-        current = snapshot(tool)
+        current = snapshot(tool, root)
         if accept_tool == tool['id']:
             previous_report = root / 'updates/latest.json'
             report = read_json(previous_report) if previous_report.exists() else {}
@@ -322,7 +326,7 @@ def update_plan(root, accept_tool=None, acknowledge=None, note=None):
         if state == 'needs_review':
             pending.append(f'{tool["id"]}：源码变化，核对原说明/工具卡/使用方后执行 accept')
         states[tool['id']] = current
-        plan.put(root / Path(tool['guide']).parent / 'INTERFACE.generated.md', generated(tool, current))
+        plan.put(root / Path(tool['guide']).parent / 'INTERFACE.generated.md', generated(tool, current, root))
     for name, manifest in manifests.items():
         for entry in manifest['tools']:
             tool = tools[entry['id']]
@@ -350,11 +354,11 @@ def update_plan(root, accept_tool=None, acknowledge=None, note=None):
             provider = next(x for x in index['projects'] if x['name'] == dependency['project_name'])
             hashes = {}
             for name in dependency['source_files']:
-                path = Path(provider['root']) / name
+                path = (root / provider['root']) / name
                 hashes[name] = digest(path.read_bytes())
             module_states.append({'consumer': p['name'], 'provider': provider['name'], 'files_sha256': hashes})
-        package(plan, root, Path(p['root']), p['rules_file'])
-        plan.put(Path(p['root']) / p['manifest_file'], encoded(manifest))
+        package(plan, root, (root / p['root']), p['rules_file'])
+        plan.put((root / p['root']) / p['manifest_file'], encoded(manifest))
     report = {'tools': states, 'module_observations': module_states, 'pending': pending,
               'scope': '已登记项目/工具及声明的模块路径；不扫描任意未登记项目，不执行业务接口。'}
     old_path = root / 'updates/latest.json'

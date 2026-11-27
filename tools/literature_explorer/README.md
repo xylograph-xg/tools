@@ -3,10 +3,10 @@
 面向科研主题的自动文献发现闭环：输入研究主题，跨 OpenAlex / Semantic Scholar 搜索、标准化、去重、相关性排序产出候选论文池；人工标记 interesting 后自动做引文扩展生成下一轮候选。公开接口为 Python 函数 + 三个 CLI 脚本；无 HTTP 服务。纯 Python 标准库，零 pip 依赖。
 
 - 本目录 ID：`literature_explorer`
-- 权威源码：`/Users/xiaoyanhao/project/paper/fetch/crawler/literature_explorer`
-- 原始说明：[README.md](/Users/xiaoyanhao/project/paper/fetch/crawler/literature_explorer/README.md)
-- Python 导入根：`/Users/xiaoyanhao/project/paper/fetch/crawler/literature_explorer`（顶层包目录本身；导入形式为 `import config`、`from connectors.openalex import search_openalex`）
-- 维护方规则：[crawler/AGENTS.md](/Users/xiaoyanhao/project/paper/fetch/crawler/AGENTS.md)；导出记录：[tool-dependencies.json](/Users/xiaoyanhao/project/paper/fetch/crawler/tool-dependencies.json)
+- 权威源码：`../../../paper/fetch/crawler/literature_explorer`
+- 原始说明：[README.md](../../../paper/fetch/crawler/literature_explorer/README.md)
+- Python 导入根：`../../../paper/fetch/crawler/literature_explorer`（顶层包目录本身；导入形式为 `import config`、`from connectors.openalex import search_openalex`）
+- 维护方规则：[crawler/AGENTS.md](../../../paper/fetch/crawler/AGENTS.md)；导出记录：[tool-dependencies.json](../../../paper/fetch/crawler/tool-dependencies.json)
 - 已确认使用方：无（2026-09-18 首次登记）
 - 核对日期：2026-09-18，未版本化
 
@@ -58,7 +58,7 @@ with Store() as store:
 此示例发起真实网络搜索（通常数十秒；无 S2 key 时更慢）。离线验证可运行工具自带测试：
 
 ```bash
-cd /Users/xiaoyanhao/project/paper/fetch/crawler/literature_explorer
+cd ../../../paper/fetch/crawler/literature_explorer
 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover tests -v
 ```
 
@@ -103,7 +103,7 @@ python3 scripts/expand_interesting.py [--limit 30] [--db path]
 - 2026-09-18：在源码目录运行 `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover tests -v`，Python 3.13.3，12 项通过。覆盖去重键优先级、跨源合并、cosine/词袋打分、OpenAlex 摘要重建、SQLite 去重/反馈/队列/缓存/provenance。
 - 2026-09-18：真实 API 验收 `python3 scripts/search_topic.py "OLED triplet exciton" --limit 20`：OpenAlex + Semantic Scholar 双源入库 130+ 篇、去重与打分正常（运行时无 S2 key、无 embedding 配置，走降级打分）。
 - 未验证：`review_candidates.py` 交互流程的真实终端会话；配置真实 embedding provider 后的打分质量；S2 有 key 时的限速行为。
-- 当前源码结构见 [自动接口快照](INTERFACE.generated.md)。修改接口后必须运行 `python3 /Users/xiaoyanhao/project/tools/scripts/sync_tools.py update`，按 [all 规则](../../all/RULES.md) 核对说明与使用方并处理待审查记录。
+- 当前源码结构见 [自动接口快照](INTERFACE.generated.md)。修改接口后必须运行 `python3 ../../../tools/scripts/sync_tools.py update`，按 [all 规则](../../all/RULES.md) 核对说明与使用方并处理待审查记录。
 
 ## 2026-10-14 审核修复与接入调整
 

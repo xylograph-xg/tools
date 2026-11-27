@@ -9,7 +9,9 @@ import sys
 
 def main():
     folder = Path(__file__).resolve().parent
-    hub = Path(os.environ.get('TOOLS_HOME') or json.loads((folder / 'hub.json').read_text())['tools_root']).expanduser().resolve()
+    configured = os.environ.get('TOOLS_HOME')
+    hub = Path(configured).expanduser() if configured else folder / json.loads((folder / 'hub.json').read_text())['tools_root']
+    hub = hub.resolve()
     project = folder.parent
     if project == hub:
         print('请先把 all 文件夹复制到新项目根目录，再运行该项目中的 all/setup.py。')

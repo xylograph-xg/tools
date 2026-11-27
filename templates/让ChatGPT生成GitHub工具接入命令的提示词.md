@@ -1,6 +1,6 @@
 # 让 ChatGPT 生成 GitHub 工具接入命令的提示词
 
-用途：把下面的提示词发给 ChatGPT，只提供 GitHub 仓库地址和目标能力，不需要上传任何本机 tools 文件。ChatGPT 审核公开仓库后，应返回一个可下载的、针对该仓库生成的 macOS `.command` 文件。下载并运行该文件时，它才动态读取并更新本机 `/Users/xiaoyanhao/project/tools`。
+用途：把下面的提示词发给 ChatGPT，只提供 GitHub 仓库地址和目标能力，不需要上传任何本机 tools 文件。ChatGPT 审核公开仓库后，应返回一个可下载的、针对该仓库生成的 macOS `.command` 文件。下载并运行该文件时，它才动态读取并更新本机 `../../tools`。
 
 发送前填写尖括号中的内容。私有仓库或本地有未推送修改时仍须向 ChatGPT 提供对应源码；公开 GitHub commit 则不需要发送本机文件。
 
@@ -9,10 +9,10 @@
 
 GitHub 仓库地址：<填写 URL>
 要使用的 branch/tag/commit：<填写；不确定时请先分析默认分支并告诉我采用的 commit>
-本机 clone 后的预期路径：<例如 /Users/xiaoyanhao/project/example-repo；如果可能变化，让脚本启动时询问或接受拖入路径>
+本机 clone 后的预期路径：<例如 ../../example-repo；如果可能变化，让脚本启动时询问或接受拖入路径>
 希望提取的能力：<填写；不确定时写“请审核后只选择最适合复用且已经实现的能力”>
 预期使用项目：<可选；没有时写“暂时没有使用方，只登记维护方”>
-本机 tools 根目录：/Users/xiaoyanhao/project/tools
+本机 tools 根目录：../../tools
 
 我的 tools 采用 source-reference：工具实现继续留在 clone 的仓库中，tools 只保存工具卡、登记信息、源码指纹、项目关系和更新报告。请不要把第三方仓库源码复制进 tools。
 
@@ -41,7 +41,7 @@ GitHub 仓库地址：<填写 URL>
 这个 `.command` 文件必须满足以下要求：
 
 - 单文件、macOS `/bin/sh` 可启动；只依赖 macOS 自带工具和 Python 3.10+ 标准库，不要求 jq，不下载依赖，不执行 curl 管道，不使用 sudo。
-- 将 tools 根目录固定为 `/Users/xiaoyanhao/project/tools`。仓库路径可由预设值、命令行第一个参数或把文件夹拖到 `.command` 上提供；写入前验证 tools 和仓库路径都准确存在。
+- 将 tools 根目录固定为 `../../tools`。仓库路径可由预设值、命令行第一个参数或把文件夹拖到 `.command` 上提供；写入前验证 tools 和仓库路径都准确存在。
 - 把本次审核产生的工具规格、人工工具卡、README 表格行、CHANGELOG 记录、精确源码文件清单、GitHub URL 和完整 commit SHA 作为常量嵌入 `.command`。不得在运行时调用 ChatGPT、OpenAI API 或其他模型，也不得联网重新生成内容。
 - 在本机运行时才使用 Python 标准库读取当前 registry.json、projects.json、README.md、CHANGELOG.md 和仓库关系表。先执行上面的本地契约检查，再根据实际现状规划变更；所以生成命令不需要我预先上传这些文件。
 - 验证本地仓库的 Git remote 与你审核的 GitHub URL一致，并验证 HEAD 等于你审核的完整 commit SHA。路径、remote、commit、必要文件或 tools schema 不一致时，以非零退出且不写任何文件。
@@ -50,13 +50,13 @@ GitHub 仓库地址：<填写 URL>
 - 只修改完成本次接入所必需的文件。优先使用“特定位置插入”，不必重写整个文件：Markdown 在明确标题、表格结束处或唯一管理标记之间插入；CHANGELOG 在顶层标题后的最新记录位置插入；新工具卡直接创建新文件。为本工具生成唯一标记 `<!-- github-tool:<tool_id>:begin -->` / `<!-- github-tool:<tool_id>:end -->`，首次运行插入，重复运行只更新该标记块，不能重复追加。
 - JSON 文件不能在尾端直接拼接文本。registry.json、projects.json 和 tool-dependencies.json 必须由内嵌 Python 使用 `json.load` 解析，按稳定主键结构化插入或更新，再用 UTF-8、两空格缩进和末尾换行写回。registry 工具按 `id` 合并、projects 按 `name` 合并、exports/tools 按 `id` 合并；遇到同 ID 不同 source_dir、同项目名不同 root 等冲突时停止，不能覆盖。
 - README 工具索引优先把新行插入“已有工具”表格的最后一行之后；找不到唯一标题或表格边界时停止并提示重新生成脚本，不能猜位置。CHANGELOG 使用带 tool_id 和审核 commit 的唯一标记块插到 `# 变更记录` 之后；找不到唯一标题时停止。保留所有标记块以外的人工内容和未知新内容。
-- 在写入前把每个将修改的旧文件备份到 `/Users/xiaoyanhao/project/tools/.sync-backups/github-onboard-<UTC时间>/`，写入采用临时文件加原子替换。任何一步失败时回滚本次已经修改的文件；不碰仓库业务源码。
+- 在写入前把每个将修改的旧文件备份到 `../../tools/.sync-backups/github-onboard-<UTC时间>/`，写入采用临时文件加原子替换。任何一步失败时回滚本次已经修改的文件；不碰仓库业务源码。
 - 工具卡内容和 registry 的接口语义由你审核后作为确定内容嵌入脚本。源码哈希由脚本运行时只对你审核列出的精确相对路径计算；发现清单外新增的公开代码/说明文件时停止并提示重新审核，不能为消除告警盲目纳入所有文件。
 - registry 中记录 GitHub URL、审核 commit/tag、许可证、验证范围和未验证事项。不能把 ChatGPT 阅读源码写成真实运行验收。
 - 可以运行你确认安全且与接口直接相关的只读/临时测试；不得自动安装依赖、使用密钥、调用付费 API、发送消息、操作登录态、写业务数据库或启动长期服务。未运行的测试明确记录为未验证。
 - 完成登记后依次运行：
-  `python3 /Users/xiaoyanhao/project/tools/scripts/sync_tools.py update`
-  `python3 /Users/xiaoyanhao/project/tools/scripts/check_links.py`
+  `python3 ../../tools/scripts/sync_tools.py update`
+  `python3 ../../tools/scripts/check_links.py`
   只要任一命令返回非零，脚本就应显示 tools/updates/latest.md 的位置并以非零退出。脚本不得自动执行 accept 或 acknowledge；首次登记的基线必须来自本次已审核且通过 commit 校验的文件，后续漂移仍交给原流程审查。
 - 结束时打印：登记的 tool_id、权威源码目录、commit、修改文件、验证命令、未验证事项和最终检查结果。日志中不得打印密钥或环境变量值。
 - 脚本应能重复运行：仓库和 tools 没变化时不产生重复条目；发生人工冲突时停止并保留现场，不静默覆盖。

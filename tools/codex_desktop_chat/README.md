@@ -1,12 +1,12 @@
 # Codex App Chat：跨项目调用说明
 
-工具 ID：`codex_desktop_chat`，版本1.0.0，source-reference。权威源码位于 [/Users/xiaoyanhao/project/paper/codex_desktop_chat](/Users/xiaoyanhao/project/paper/codex_desktop_chat)，原创实现使用 Apple 公共 AX/Unicode API，不依赖探索阶段的 npm/GitHub 工具。
+工具 ID：`codex_desktop_chat`，版本1.0.0，source-reference。权威源码位于 [../../../paper/codex_desktop_chat](../../../paper/codex_desktop_chat)，原创实现使用 Apple 公共 AX/Unicode API，不依赖探索阶段的 npm/GitHub 工具。
 
 ZIP 目录优先取 `CODEX_CHAT_ZIP_DIR`，当前工作区默认使用 `~/process/app-upload-zips`，独立安装按源码根目录下的 `data/app-upload-zips` 回退。
 
-完整契约、并发示例、错误恢复见[调用说明](/Users/xiaoyanhao/project/paper/codex_desktop_chat/调用说明.md)，参数见[input.schema.json](/Users/xiaoyanhao/project/paper/codex_desktop_chat/input.schema.json)。
+完整契约、并发示例、错误恢复见[调用说明](../../../paper/codex_desktop_chat/调用说明.md)，参数见[input.schema.json](../../../paper/codex_desktop_chat/input.schema.json)。
 
-运行条件：macOS、Python >=3.11、Swift编译器、已登录 Codex App Chat、辅助功能权限。首次编译按源码哈希缓存；无第三方 Python 依赖。将 `/Users/xiaoyanhao/project/paper` 加入调用方 PYTHONPATH。
+运行条件：macOS、Python >=3.11、Swift编译器、已登录 Codex App Chat、辅助功能权限。首次编译按源码哈希缓存；无第三方 Python 依赖。将 `../../../paper` 加入调用方 PYTHONPATH。
 
 ```python
 from codex_desktop_chat import ask_once
@@ -14,7 +14,7 @@ answer = ask_once("只回复 OK", foreground=True, state_dir="/absolute/private/
 ```
 
 ```bash
-PYTHONPATH=/Users/xiaoyanhao/project/paper python3 -m codex_desktop_chat status
+PYTHONPATH=../../../paper python3 -m codex_desktop_chat status
 ```
 
 `ask_once`/`ask`返回完整字符串；`submit`返回持久回执、`collect`只收取原窗口。默认 GPT-6 High、10秒轮询、收取900秒；显式可选 GPT-5.6 Sol High，无自动回退。错误抛 DesktopChatError，包含 code/receipt_id/may_have_sent；CLI单JSON、成功0/错误2。未给 foreground=True 的新建/发送返回 foreground_required，不作隐式前台操作。
@@ -42,7 +42,7 @@ files输入自动先打包，实际仅上传一个ZIP，回执保存包/输入�
 
 ## 2026-10-13 独立子项目与API入口
 
-原根导入、ask/submit/collect签名和唯一源码位置保持。新增可选 `codex_desktop_chat.api`，接口与完整实现清单见 [源码项目README](/Users/xiaoyanhao/project/paper/codex_desktop_chat/README.md) 和 [interface.json](/Users/xiaoyanhao/project/paper/codex_desktop_chat/interface.json)。网页制卡/核验只复用ZIP准备/校验，桌面操作仍需原显式授权。测试已迁入工具自己的tests；本轮只有离线回归、接口身份和构建验证，没有新真实桌面Chat、ZIP上传或科学验收。
+原根导入、ask/submit/collect签名和唯一源码位置保持。新增可选 `codex_desktop_chat.api`，接口与完整实现清单见 [源码项目README](../../../paper/codex_desktop_chat/README.md) 和 [interface.json](../../../paper/codex_desktop_chat/interface.json)。网页制卡/核验只复用ZIP准备/校验，桌面操作仍需原显式授权。测试已迁入工具自己的tests；本轮只有离线回归、接口身份和构建验证，没有新真实桌面Chat、ZIP上传或科学验收。
 
 ## 八项目归并下的ZIP目录
 
@@ -51,7 +51,7 @@ files输入自动先打包，实际仅上传一个ZIP，回执保存包/输入�
 
 ## 2026-10-14 审计整改
 
-缓存命中同时核对当前源清单/ZIP整体哈希，独占发布不覆盖旧证据；verify_bundle新增manifest_files字段。ZIP特殊条目拒绝。桌面回答按原轮次收取，历史完成标志无效，缺锚点仅只读等待；Python/Swift均在UI副作用前要求授权，回执阶段禁止倒退。Wheel显式分发native.swift与schema。50项离线回归、Swift编译、14组件/307出口检查通过，真实App/复杂AX保真/ZIP读取未新验收。详情见[复核记录](/Users/xiaoyanhao/project/paper/codex_desktop_chat/AUDIT_REVIEW.md)。
+缓存命中同时核对当前源清单/ZIP整体哈希，独占发布不覆盖旧证据；verify_bundle新增manifest_files字段。ZIP特殊条目拒绝。桌面回答按原轮次收取，历史完成标志无效，缺锚点仅只读等待；Python/Swift均在UI副作用前要求授权，回执阶段禁止倒退。Wheel显式分发native.swift与schema。50项离线回归、Swift编译、14组件/307出口检查通过，真实App/复杂AX保真/ZIP读取未新验收。详情见[复核记录](../../../paper/codex_desktop_chat/AUDIT_REVIEW.md)。
 
 ## 2026-10-14：paper剩余页面恢复合同
 
@@ -59,7 +59,7 @@ paper/browser通过codex_desktop_chat公开verify_bundle只读核对已登记、
 
 2026-10-14 文档路径核对：paper 八项目归并后，模块 README 的离线测试命令改用 infrastructure/environments/test 与 infrastructure/maintenance/test_runner.py；全局边界检查为 make check。工具公开参数及使用方适配未改，本轮没有新的桌面外发或上传。
 
-2026-10-14：源码目录新增[AUDIT.md](/Users/xiaoyanhao/project/paper/codex_desktop_chat/AUDIT.md)，属于静态审计材料；本次登记仅核对新增说明，公开实现、ZIP接口和消费方参数均未变化，不表示报告建议已实施或桌面实机验收通过。
+2026-10-14：源码目录新增[AUDIT.md](../../../paper/codex_desktop_chat/AUDIT.md)，属于静态审计材料；本次登记仅核对新增说明，公开实现、ZIP接口和消费方参数均未变化，不表示报告建议已实施或桌面实机验收通过。
 
 2026-10-18 登记维护：已删除的历史审计 MD 依 paper 删除指纹清单退出当前源码清单；历史验证叙述仍保留，生产 Python/Swift/ZIP 接口不因此变更。本项无新增 UI/上传验收。
 

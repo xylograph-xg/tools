@@ -2,11 +2,42 @@
   "changes": [
     {
       "consumer": "paper",
-      "provider": "paper",
+      "provider": "read",
       "files_sha256": {
-        "../oled_formulas/api.py": "375389485c88b5ec6e522972de9fec6c74d48df1e84f75c43e9cb3a703b491b5",
-        "../oled_formulas/__main__.py": "f22cca0108b4a4d51501c889486467f8ad7529f9a8eb67fe56348fe464d8f19b",
-        "../oled_formulas/interface.json": "9c790f8d9535187944a8f8c05f5f37d41453d623c5527ac4f8a91fc7701efe2d"
+        "api.py": "2d63b359c9afb6e87f2e4de7b40f1430cef7df2df6ceb408618a01ea82c5b874",
+        "interface.json": "0038eec9d71620b6a69d050bc9b205854f1ad52327f9c33fe33658ea9009308f",
+        "app/analyzer.py": "150600aea4586293aeea42def504b411f4bbac1045ae2b1d834d96a81c839eb4",
+        "app/parser.py": "c0013ef23201787f005c1dacc85d5765b50af379cebf4ab99e33d7de3bf59d79",
+        "app/exporter.py": "b831340d7f0b2ea14c0937b32537b0cdc01b7599c159a47f5d56f7bf70c5f3e3",
+        "scripts/ollama_env.sh": "20b2fb584c5517af14cdedaa60d40334da91475fd5c63f2f817fbcaa0b14db37",
+        "app/prompts/figure.md": "2dd3df5d7d4cb744ab37972007d8618f3b4136055e7dfbfe21867bce1f291042",
+        "app/prompts/equation.md": "e692179918dd4df72cafc8ef82e050f1e17b6c19efc356ded105731265d1d689",
+        "app/evidence_identity.py": "3d3967e666d07f8d8c373ffab00ec714555090a7d77e7bda6b9310b2e46d6b2a",
+        "app/generation_state.py": "959ab251d42c2a59120224700f929af21161ff8001729c57a6cd8d80a21a7d9a",
+        "app/prompts/system.md": "87771c56c383f6da32f290efd67c24c56ac8032b1dd0bca50bf712960f456200",
+        "app/ollama_transport.py": "4b91ac7b8ed9884b694915335800ab38b1331243e8d203811330388f8323160a",
+        "app/prompts/domain_oled.md": "bde6ad8b649e74d2909dc1417b16a85d42e791a6c6fe09d6476bf0c4164b5566",
+        "app/context_budget.py": "1e725cb3193e2c3eb8846662944e73476a15d4d297a403d8eebef1d74908a725",
+        "app/evidence_quotes.py": "509f336af6b8b07b1d1266c78723cd4086cb06abdab0288181d77e4d07f318d9",
+        "app/atomic_io.py": "8a8fb260034a0dc53cb5a182c9b370d51a4f8e2bca37be4753a842a98c3fca88",
+        "app/prompt_input.py": "099ab59c9fb2d333f9cf21c057ccb2bcf77c4b17403293ae4c8e8fbaa2594ec2",
+        "app/evidence_preparation.py": "bf208a1164b27f865f5288fa5487082fa6e8fa89f9843b3c9296247a35fd5981",
+        "app/evidence_literal.py": "ffc2638c741be75fbbcd7bbc2e11ce8d30a9b366a90a859ab4499d7cae275d17",
+        "app/prompts/classify.md": "fd84e2a90bed4f76232e6cd347c63fa99b2a85a15f085143a490bb5ec7dcfae7",
+        "app/prompts/introduction.md": "1d75517d23157462482d4ec3f81fa956e0ac616402033a5539123f8434d81e37",
+        "app/prompts/conclusion.md": "fca768d3d2eadb501d84c0e546ba41867e4a843cd8260f752ba24a2faaea76fe",
+        "app/prompts/key_findings.md": "d89fb813f4935c5a9c4b9247f132d34dd6ab97b519d2ab55aced7c66513e629d",
+        "app/prompts/paper_info.md": "e9846401c638c75417e252a220c7dce1ce1d9d13cab58c74f6cc5df6b5d743d1",
+        "app/pdf_geometry.py": "8946c27efc533a3dda56e0cf206340e1da7589444ddae8723181ef8f0761b17b"
+      }
+    },
+    {
+      "consumer": "paper",
+      "provider": "article",
+      "files_sha256": {
+        "api.py": "f775e1c2931f73bededb1099e2ee3c0a0374f0c7ebf8fa5f96ee8df252fcf5ce",
+        "interface.json": "12c45367d1500ba4f9f154c9b1d36ad8f959bd937083aed82bc5cc891c061122",
+        "src/web_gpt_adapter.py": "70742545cd03328f17cd51f77bab906059e20ae345df08d0046eda53efb53c33"
       }
     }
   ],

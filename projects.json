@@ -5,25 +5,25 @@
   "projects": [
     {
       "name": "article",
-      "root": "/Users/xiaoyanhao/project/paper/infrastructure/article",
+      "root": "../paper/infrastructure/article",
       "rules_file": "AGENTS.md",
       "manifest_file": "tool-dependencies.json"
     },
     {
       "name": "crawler",
-      "root": "/Users/xiaoyanhao/project/paper/fetch/crawler",
+      "root": "../paper/fetch/crawler",
       "rules_file": "AGENTS.md",
       "manifest_file": "tool-dependencies.json"
     },
     {
       "name": "read",
-      "root": "/Users/xiaoyanhao/project/paper/workbench/read",
+      "root": "../paper/workbench/read",
       "rules_file": "AGENTS.md",
       "manifest_file": "tool-dependencies.json"
     },
     {
       "name": "paper",
-      "root": "/Users/xiaoyanhao/project/paper/infrastructure",
+      "root": "../paper/infrastructure",
       "rules_file": "AGENTS.md",
       "manifest_file": "tool-dependencies.json"
     }
