@@ -1,0 +1,16 @@
+6e1eb59d9647953e1f709e9e5cac7df37cda34f399cb843eafe61254c36ced91  wheels/codex_web_client-1.3.0+proprobe.1-py3-none-any.whl
+d01954e8c18603d9d8a8acf4a8059601b9f2e3204e01bf94e3d680987e132486  wheels/paper_article-1.0.0-py3-none-any.whl
+4502e9402a3641b85b3da7ed4e9baf75c88ccc741dc539847ff4270cc8ace18e  wheels/paper_browser-1.0.0-py3-none-any.whl
+4bcde7668d7ba9f7f6ad89aa40eb161f63e95891aa6d02897080ed9909c12030  wheels/paper_cards-1.0.0-py3-none-any.whl
+6ac81c7383b1efd4f11390c0ce155c4317c2d72535dd452f943c68fc326d39da  wheels/paper_codex_desktop_chat-1.0.0-py3-none-any.whl
+24c76c25b0021eb42e337dedcc5d09885cf4cc3ab62bf701dcbf9a37900419b9  wheels/paper_core-1.0.0-py3-none-any.whl
+18feba650c3f1b44235d9c23a169663cb6c6ffb17ba8f0e5539499706fd646a8  wheels/paper_correction-1.0.0-py3-none-any.whl
+1b0c51bf277cfc482da70649e48bc4a0509b2a9aead761bf54a4acba714dc910  wheels/paper_crawler-1.0.0-py3-none-any.whl
+548c83582da97e4fa904297b2e5b914b38c889e3d759f9863f1a76fdbddfbd7d  wheels/paper_fetch-1.0.0-py3-none-any.whl
+8014cd0e5631a3dd55e4b7e0489a6dd9719fdeffcf39d2e42499f4277527bb67  wheels/paper_literature-0.7.0-py3-none-any.whl
+6c785839b2bf1852875754e8decbc3761c4b87960ac85cbefb8b6f76c94df30b  wheels/paper_maintenance-1.0.0-py3-none-any.whl
+dd6f992f482cf3244e7329766b9e67f2e2da0b4c51d7057112fc71c53fba53c6  wheels/paper_oled_formulas-1.0.0+review.2-py3-none-any.whl
+e2b990cfc35ac368e44800af67beb9572c460ac683cab78fcbde8a631480b64a  wheels/paper_read-1.0.0-py3-none-any.whl
+4961921dd71f98792b15da1e22893e1f6001e83215eb8663ff1c731a4082503c  wheels/paper_reading-1.0.0-py3-none-any.whl
+5349962e3c1a4d88432a53eade98d87a77dafab4c5e3517ef10d90fd28d27f39  wheels/paper_review-1.0.0-py3-none-any.whl
+f5db9063a4ed798e547d282103e8d5855d52398534c6fab8f68289c7dc2b05e0  wheels/paper_workbench-1.0.0-py3-none-any.whl
